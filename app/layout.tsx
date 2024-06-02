@@ -1,11 +1,11 @@
 import type {Metadata} from "next";
-import {Montserrat} from "next/font/google";
+import {Montserrat_Alternates} from "next/font/google";
 import "./globals.css";
 import React, {Suspense} from "react";
 import Navigation from "../components/Navigation";
 import Footer from "@/Footer";
 
-const montserrat = Montserrat({subsets: ['latin'], weight: ['400', '500', '700']});
+const montserrat = Montserrat_Alternates({subsets: ['cyrillic'], weight: ['400', '500', '700']});
 
 export const metadata: Metadata = {
     title: "Skopje Paws",
@@ -19,7 +19,7 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
     return (
         <html lang="en">
         <body
-            className={`${montserrat.className} flex flex-col justify-between items-center h-full w-full bg-gray-dark text-white`}>
+            className={`${montserrat.className} flex flex-col justify-between items-center h-full w-full bg-white text-white`}>
         <Navigation/>
         <main>
             <Suspense>{children}</Suspense>

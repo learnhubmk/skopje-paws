@@ -12,25 +12,12 @@ const config: Config = {
             xl: '1440px',
         },
         colors: {
-            'blue': '#1fb6ff',
-            'purple': '#7e5bef',
-            'pink': '#ff49db',
-            'orange': '#ff7849',
-            'green': '#13ce66',
-            'yellow': '#ffc82c',
-            'gray-dark': '#273444',
-            'gray': '#8492a6',
-            'gray-light': '#d3dce6',
+            'cream': '#FFE8DF',
+            'orange': '#FFAC66',
             transparent: 'transparent',
             current: 'currentColor',
             'white': '#ffffff',
-            'black': '#000',
-            'midnight': '#121063',
-            'metal': '#565584',
-            'tahiti': '#3ab7bf',
-            'silver': '#ecebff',
-            'bubble-gum': '#ff77e9',
-            'bermuda': '#78dcca',
+            'black': '#000'
         },
         extend: {
             spacing: {
