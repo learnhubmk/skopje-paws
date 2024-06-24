@@ -1,45 +1,54 @@
 import Image from "next/image";
-import img from "../public/footerLogo.svg";
-import paws from "../public/paws.svg";
+import footerLogo from "../public/footerLogo.svg";
+import pawsFootprint from "../public/paws.svg";
 
 const Footer = () => {
-
     return (
-        <footer className="w-full flex items-center justify-center pb-[76px] pt-[50px]">
-            <div className="flex flex-col items-center relative border-2 rounded-[25px] border-[#FFAC66] w-[1240px] h-[281px]">
-                <Image src={img} alt={"Hero Image"} width={104} height={84} className="absolute top-[30px]" />
-                <p className="absolute top-[122px] text-[17.33px] text-black">077 805 229</p>
+        <footer className="w-full flex items-center justify-center pb-20 pt-12">
+            <div className="flex flex-col relative border-2 items-center justify-center rounded-3xl border-orange w-5/6 max-w-screen-xl p-4">
+                <Image src={footerLogo} alt="Hero Image" className="mx-auto w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-4" />
+                <div className="flex flex-col items-center">
+                    <a className="text-lg md:text-xl lg:text-2xl text-black mb-6" href="tel:077805229">077 805 229</a>
+                </div>
 
-                <Image src={paws} alt={"Paws 1"} width={78.74} height={78.74} className="absolute top-[113px] left-[81px] rotate-[-157deg]"></Image>
-                <Image src={paws} alt={"Paws 2"} width={78.74} height={78.74} className="absolute top-[-22px] left-[261px] rotate-[-134.91deg]"></Image>
-                <Image src={paws} alt={"Paws 3"} width={78.74} height={78.74} className="absolute bottom-[-20px] left-[538px] rotate-[-154.79deg]"></Image>
-                <Image src={paws} alt={"Paws 4"} width={78.74} height={78.74} className="absolute top-[-12px] right-[251px] rotate-[163.6deg]" />
-                <Image src={paws} alt={"Paws 5"} width={78.74} height={78.74} className="absolute top-[179px] right-[80px] rotate-[-177.86deg]"></Image>
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <Image src={pawsFootprint} alt="Paws Footprint 1" className="absolute bottom-1/4 left-1/4 -translate-x-16 lg:-translate-x-32 rotate-[-157deg] w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" />
+                    <Image src={pawsFootprint} alt="Paws Footprint 2" className="absolute -top-4 left-1/4 rotate-[-135deg] w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" />
+                    <Image src={pawsFootprint} alt="Paws Footprint 3" className="absolute -bottom-4 -translate-x-3/4 rotate-[-154.79deg] w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" />
+                    <Image src={pawsFootprint} alt="Paws Footprint 4" className="absolute -top-2 right-1/4 translate-x-8 rotate-[163.6deg] w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" />
+                    <Image src={pawsFootprint} alt="Paws Footprint 5" className="absolute bottom-4 right-1/4 translate-x-16 lg:translate-x-32 rotate-[-177.86deg] w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" />
+                </div>
 
-                <a href="#blog" className="absolute bottom-[15px] left-[559px] w-[82px] h-[40px] bg-[#FFAC66] flex items-center justify-center rounded-[10px] rotate-[2deg] text-[#2C2C2C]">
-                    <p>Блог</p>
-                </a>
-                <a href="#clients" className="absolute bottom-[62px] left-[440px] w-[174px] h-[40px] bg-[#FFAC66] flex items-center justify-center rounded-[10px] rotate-[3deg] text-[#2C2C2C]">
-                    <p>Наши клиенти</p>
-                </a>
-                <a href="#contact" className="absolute bottom-[50px] right-[485px] w-[128px] h-[40px] bg-[#FFAC66] flex items-center justify-center rounded-[10px] rotate-[13deg] text-[#2C2C2C]">
-                    <p>Контакт</p>
-                </a>
-                <a href="#services" className="absolute bottom-[17px] left-[367px] w-[103px] h-[40px] bg-[#FFAC66] flex items-center justify-center rounded-[10px] rotate-[-4deg] text-[#2C2C2C]">
-                    <p>Услуги</p>
-                </a>
-                <a href="#steps" className="absolute bottom-[47px] left-[197px] w-[240px] h-[40px] bg-[#FFAC66] flex items-center justify-center rounded-[10px] rotate-[-16deg] text-[#2C2C2C]">
-                    <p>Чекори за закажување</p>
-                </a>
-                <a href="https://www.instagram.com/skopjepaws/" target="_blank" className="absolute bottom-[18px] right-[347px] w-[130px] h-[40px] border-2 border-[#FFAC66] flex items-center justify-center rounded-[10px] rotate-[-4deg] text-[#2C2C2C]">
-                    <p>Instagram</p>
-                </a>
-                <a href="https://www.facebook.com/people/Skopje-Paws/61556801129482/" target="_blank" className="absolute bottom-[62px] right-[263px] w-[122px] h-[40px] border-2 border-[#FFAC66] flex items-center justify-center rounded-[10px] rotate-[6deg] text-[#2C2C2C]">
-                    <p>Facebook</p>
-                </a>
-                <a href="https://www.linkedin.com/company/skopje-paws/" target="_blank" className="absolute bottom-[12px] right-[203px] w-[112px] h-[40px] border-2 border-[#FFAC66] flex items-center justify-center rounded-[10px] rotate-[-1deg] text-[#2C2C2C]">
-                    <p>Linkedin</p>
-                </a>
+                <div className="flex flex-col justify-center gap-y-8 w-11/12 md:w-3/4 md:flex-row md:gap-0 py-2">
+                    <div className="flex flex-wrap justify-center gap-x-4 gap-y-10 md:justify-end md:pr-2 md:w-3/5 md:max-w-128">
+                        <a href="#steps" className="w-60 h-10 bg-orange flex items-center justify-center rounded-md rotate-[-11deg] text-charcoal">
+                            <p>Чекори за закажување</p>
+                        </a>
+                        <a href="#clients" className="w-44 h-10 bg-orange flex items-center justify-center rounded-md rotate-[3deg] text-charcoal">
+                            <p>Наши клиенти</p>
+                        </a>
+                        <a href="#contact" className="w-32 h-10 bg-orange flex items-center justify-center rounded-md rotate-[13deg] text-charcoal">
+                            <p>Контакт</p>
+                        </a>
+                        <a href="#services" className="w-24 h-10 bg-orange flex items-center justify-center rounded-md rotate-[-4deg] text-charcoal">
+                            <p>Услуги</p>
+                        </a>
+                        <a href="#blog" className="w-20 h-10 bg-orange flex items-center justify-center rounded-md rotate-[2deg] text-charcoal">
+                            <p>Блог</p>
+                        </a>
+                    </div>
+                    <div className="flex flex-wrap justify-center gap-8 md:justify-start md:pl-2 md:w-2/5">
+                        <a href="https://www.instagram.com/skopjepaws/" target="_blank" className="w-32 h-10 border-2 border-orange flex items-center justify-center rounded-md rotate-[-4deg] text-charcoal">
+                            <p>Instagram</p>
+                        </a>
+                        <a href="https://www.facebook.com/people/Skopje-Paws/61556801129482/" target="_blank" className="w-32 h-10 border-2 border-orange flex items-center justify-center rounded-md rotate-[6deg] text-charcoal">
+                            <p>Facebook</p>
+                        </a>
+                        <a href="https://www.linkedin.com/company/skopje-paws/" target="_blank" className="w-32 h-10 border-2 border-orange flex items-center justify-center rounded-md rotate-[-1deg] text-charcoal">
+                            <p>Linkedin</p>
+                        </a>
+                    </div>
+                </div>
             </div>
         </footer>
     )
