@@ -17,42 +17,26 @@ const Steps = () => {
                 <StepsCard
                     title="Закажување"
                     description="Закажи бесплатен термин за запознавање со вашето милениче"
-                    color="cream"
-                    image={
-                        <Image
-                            alt="paw"
-                            src={Paw}
-                        />}
+                    color="bg-cream"
+                    image={Paw}
                 />
                 <StepsCard
                     title="Прва средба"
                     description="На првата средба сикутираме за вашето милениче предности и мани и се договараме за цена"
-                    color="orange"
-                    image={
-                        <Image
-                            alt="paw"
-                            src={PawTwo}
-                        />}
+                    color="bg-orange"
+                    image={PawTwo}
                 />
                 <StepsCard
                     title="Први прошетки"
                     description="Првите прошетки се најбитните за да се формира „врската“ помеѓу кучето и тој што го шета"
-                    color="cream"
-                    image={
-                        <Image
-                            alt="paw"
-                            src={Paw}
-                        />}
+                    color="bg-cream"
+                    image={Paw}
                 />
                 <StepsCard
                     title="Среќа секој ден"
                     description="Вашето милениче со нетрпение и радост ќе го чека својот термин за прошетка секој ден"
-                    color="orange"
-                    image={
-                        <Image
-                            alt="paw"
-                            src={PawTwo}
-                        />}
+                    color="bg-orange"
+                    image={PawTwo}
                 />
             </div>
         </div>
