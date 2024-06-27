@@ -19,7 +19,7 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
     return (
         <html lang="en">
         <body
-            className={`${montserrat.className} flex flex-col justify-between items-center h-full w-full bg-white text-white`}>
+            className={`${montserrat.className}  flex-col justify-between items-center h-full w-full bg-white text-white`}>
         <Navigation/>
         <main>
             <Suspense>{children}</Suspense>
