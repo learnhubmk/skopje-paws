@@ -17,7 +17,8 @@ const config: Config = {
             transparent: 'transparent',
             current: 'currentColor',
             'white': '#ffffff',
-            'black': '#000'
+            'black': '#000',
+            'grey': "#808080",
         },
         extend: {
             spacing: {

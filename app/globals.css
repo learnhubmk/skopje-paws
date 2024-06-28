@@ -1,12 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.bg-form {
-  background-color: #ffac66;
-}
-
-.placeholder-gray::placeholder {
-  color: #4a5568;
-}
-
