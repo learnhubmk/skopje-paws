@@ -4,17 +4,19 @@ import React from 'react'
 
 export default function FAQDropDown() {
   return (
-    <>
-      <div>
+    <div className="grid grid-cols-2 gap-10 p-10">
+
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <h2>Често поставувани
           прашања</h2>
-        <p>Погледнете дали вашето прашање се најдува во овие прашања и договори. Доколку не се најдува, слобдно контактирајте не преку копчето подолу.</p>
-        <LinkButton type={'link'} url={''} text={''} bgColor={'bg-white'} textColor={'text-white'}></LinkButton>
+        <p>Погледнете дали вашето прашање се наоѓа во овие прашања и договори. Доколку не се наоѓа, слобдно контактирајте не преку копчето подолу.</p>
+        <LinkButton type={'link'} url={''} text={'Поставете прашање'} bgColor={'bg-orange'} textColor={'text-black'}></LinkButton>
       </div>
+      {/* accordions */}
       <div className="space-y-4">
-        <details className="group [&_summary::-webkit-details-marker]:hidden" open>
+        <details className="group [&_summary::-webkit-details-marker]:hidden">
           <summary
-            className="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-black-900"
+            className="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-black-900" style={{ border: '1px solid #FFAC66' }}
           >
             <h2 className="font-medium">Како да закажам прошетка?</h2>
 
@@ -29,7 +31,7 @@ export default function FAQDropDown() {
             </svg>
           </summary>
 
-          <p className="mt-4 px-4 leading-relaxed text-gray-700">
+          <p className="mt-4 px-4 leading-relaxed text-gray-700" style={{ border: '1px solid #FFAC66', background: '#FFAC66' }}>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatis molestias culpa in,
             recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
             consequuntur distinctio corporis earum similique!
@@ -38,8 +40,7 @@ export default function FAQDropDown() {
 
         <details className="group [&_summary::-webkit-details-marker]:hidden">
           <summary
-            className="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-black-900"
-          >
+            className="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-black-900" style={{ border: '1px solid #FFAC66' }}>
             <h2 className="font-medium">Како оди процесот на запознавање?</h2>
 
             <svg
@@ -53,7 +54,7 @@ export default function FAQDropDown() {
             </svg>
           </summary>
 
-          <p className="mt-4 px-4 leading-relaxed text-black-700">
+          <p className="mt-4 px-4 leading-relaxed text-black-700" style={{ border: '1px solid #FFAC66', background: '#FFAC66' }}>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatis molestias culpa in,
             recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
             consequuntur distinctio corporis earum similique!
@@ -62,7 +63,7 @@ export default function FAQDropDown() {
 
         <details className="group [&_summary::-webkit-details-marker]:hidden">
           <summary
-            className="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-black-900"
+            className="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-black-900" style={{ border: '1px solid #FFAC66' }}
           >
             <h2 className="font-medium">Од што зависи цената на прошетката?</h2>
 
@@ -77,14 +78,15 @@ export default function FAQDropDown() {
             </svg>
           </summary>
 
-          <p className="mt-4 px-4 leading-relaxed text-black-700">
+          <p className="mt-4 px-4 leading-relaxed text-black-700" style={{ border: '1px solid #FFAC66', background: '#FFAC66' }}>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatis molestias culpa in,
             recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
             consequuntur distinctio corporis earum similique!
           </p>
         </details>
       </div>
-    </>
+
+    </div>
   )
 };
 
