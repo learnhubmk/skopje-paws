@@ -6,7 +6,7 @@ const Form = () => {
   return (
     <div className="flex flex-col h-full w-full mt-10 px-6 md:px-24 text-black">
       <div className="bg-orange rounded-3xl p-5 flex flex-col shadow-xl">
-        <h2 className="text-3xl font-extrabold mb-4">Контактирајте нѐ!</h2>
+        <h2 className="lg:text-3xl md:text-2xl font-extrabold mb-4">Контактирајте нѐ!</h2>
         <p className="mb-6">Поставете прашање или она што Ве интересира</p>
         <div className="flex flex-col lg:flex-row justify-between mb-6">
           <input
@@ -30,11 +30,11 @@ const Form = () => {
         </div>
         <div className="mb-6 flex flex-col lg:flex-row  h-full">
           <textarea
-            className="rounded-xl p-5 w-full lg:w-2/3 h-60 bg-orange border placeholder-grey focus:outline-none mb-3 lg:mb-0"
+            className="rounded-xl p-5 w-full lg:w-2/3  md:w-full h-60 bg-orange border placeholder-grey focus:outline-none mb-3 lg:mb-0"
             placeholder="Вашата порака"
             required
           ></textarea>
-          <div className="p-3 w-full lg:w-1/3 h-full flex flex-col md:flex-row justify-center items-center">
+          <div className="p-3  lg:w-1/3  md:w-full lg:w-1/3 h-full flex flex-col md:flex-row justify-center items-center">
             <Image src={DogImage} alt="Dog image"></Image>
             <Image src={CatImage} alt="Cat image"></Image>
           </div>
