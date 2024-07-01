@@ -2,7 +2,7 @@ import LinkButton from '@/LinkButton'
 import React from 'react'
 
 
-export default function FAQDropDown() {
+export default function FAQAccordion() {
   return (
     <div className="grid grid-cols-2 gap-10 p-10">
 
