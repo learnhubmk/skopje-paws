@@ -1,5 +1,6 @@
 import LinkButton from '@/LinkButton'
 import React from 'react'
+import FAQ from './FAQ.json'
 
 
 export default function FAQAccordion() {
