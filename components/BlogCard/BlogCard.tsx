@@ -5,10 +5,10 @@ type BlogCardProps = {
   title: string;
   text: string;
   imageUrl: string;
-  time: string;
+  date: string;
 };
 
-const BlogCard: React.FC<BlogCardProps> = ({ title, text, imageUrl, time }) => {
+const BlogCard: React.FC<BlogCardProps> = ({ title, text, imageUrl, date }) => {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
       <div className="relative w-full h-64 rounded-lg overflow-hidden">
@@ -21,9 +21,9 @@ const BlogCard: React.FC<BlogCardProps> = ({ title, text, imageUrl, time }) => {
         />
       </div>
       <div className="px-6 py-4">
-          <div className="text-gray-500 text-sm">{time}</div>
+          <div className="text-gray-500 text-sm">{date}</div>
         <div className="flex justify-between items-center mb-2">
-          <div className="font-bold text-xl text-gray-900">{title}</div>
+          <div className="font-bold text-xl text-black">{title}</div>
         </div>
         <p className="text-gray-700 text-base">{text}</p>
       </div>
