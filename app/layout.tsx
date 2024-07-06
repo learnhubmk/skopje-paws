@@ -1,11 +1,12 @@
-import type {Metadata} from "next";
-import {Montserrat_Alternates} from "next/font/google";
+import type { Metadata } from "next";
+import { Montserrat_Alternates } from "next/font/google";
 import "./globals.css";
-import React, {Suspense} from "react";
+import React, { Suspense } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "@/Footer";
+import RecaptchaProvider from "@/reCAPTCHA";
 
-const montserrat = Montserrat_Alternates({subsets: ['cyrillic'], weight: ['400', '500', '700']});
+const montserrat = Montserrat_Alternates({ subsets: ['cyrillic'], weight: ['400', '500', '700'] });
 
 export const metadata: Metadata = {
     title: "Skopje Paws",
@@ -15,17 +16,20 @@ export const metadata: Metadata = {
     },
 };
 
-export default function RootLayout({children}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en">
-        <body
-            className={`${montserrat.className}   h-full w-full bg-white text-white`}>
-        <Navigation/>
-        <main>
-            <Suspense>{children}</Suspense>
-        </main>
-        <Footer/>
-        </body>
+            <body className={`${montserrat.className} h-full w-full bg-white text-white`}>
+                <RecaptchaProvider>
+                    <Navigation />
+                    <main>
+                        <Suspense>
+                            {children}
+                        </Suspense>
+                    </main>
+                    <Footer />
+                </RecaptchaProvider>
+            </body>
         </html>
     );
 }

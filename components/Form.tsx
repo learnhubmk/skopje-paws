@@ -1,8 +1,47 @@
+"use client"
+
 import Image from "next/image";
 import DogImage from "../public/Form images/dog_form.png";
 import CatImage from "../public/Form images/cat_form.png";
+import { FormEvent } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const Form = () => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!executeRecaptcha) {
+      console.log("Not available to execute reCAPTCHA");
+      return;
+    }
+
+    const gRecaptchaToken = await executeRecaptcha("formSubmit");
+
+    try {
+      const response = await fetch("/api/route", {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ gRecaptchaToken }),
+      });
+
+      const responseData = await response.json();
+
+      if (responseData?.success === true) {
+        console.log(`Success with score: ${responseData?.score}`);
+      } else {
+        console.log(`Failure with score: ${responseData?.score}`);
+      }
+    } catch (error) {
+      console.error("Error submitting form", error);
+    }
+  };
+
+
   return (
     <div className="flex flex-col h-full w-full mt-10 px-6 md:px-24 text-black">
       <div className="bg-orange rounded-3xl p-5 flex flex-col shadow-xl">
@@ -39,7 +78,7 @@ const Form = () => {
             <Image src={CatImage} alt="Cat image"></Image>
           </div>
         </div>
-        <form className="flex flex-col justify-between items-start h-full w-full">
+        <form className="flex flex-col justify-between items-start h-full w-full" onSubmit={handleSubmit}>
           <button
             type="submit"
             className="rounded-xl bg-white p-3 w-full lg:w-1/3 shadow-xl"
