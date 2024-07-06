@@ -1,19 +1,21 @@
-import type { Metadata } from "next";
+"use client"
+
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import React, { Suspense } from "react";
 import { Montserrat_Alternates } from "next/font/google";
 import "./globals.css";
-import React, { Suspense } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "@/Footer";
-import RecaptchaProvider from "@/reCAPTCHA";
 
 const montserrat = Montserrat_Alternates({ subsets: ['cyrillic'], weight: ['400', '500', '700'] });
 
-export const metadata: Metadata = {
-    title: "Skopje Paws",
-    description: "The first personal dog walking services. Not just professionals, but animal lovers too.",
-    icons: {
-        icon: '/favicon.jpg',
-    },
+const RecaptchaProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const recaptchaKey: string | undefined = process?.env?.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+    return (
+        <GoogleReCaptchaProvider reCaptchaKey={recaptchaKey ?? "NOT DEFINED"}>
+            {children}
+        </GoogleReCaptchaProvider>
+    );
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

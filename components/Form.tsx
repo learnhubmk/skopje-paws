@@ -20,10 +20,10 @@ const Form = () => {
     const gRecaptchaToken = await executeRecaptcha("formSubmit");
 
     try {
-      const response = await fetch("/api/route", {
+      const response = await fetch("/api/recaptcha", {
         method: "POST",
         headers: {
-          Accept: "application/json, text/plain, */*",
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ gRecaptchaToken }),
@@ -31,7 +31,7 @@ const Form = () => {
 
       const responseData = await response.json();
 
-      if (responseData?.success === true) {
+      if (responseData?.success) {
         console.log(`Success with score: ${responseData?.score}`);
       } else {
         console.log(`Failure with score: ${responseData?.score}`);
