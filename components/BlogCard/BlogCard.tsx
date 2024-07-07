@@ -21,11 +21,11 @@ const BlogCard: React.FC<BlogCardProps> = ({ title, text, imageUrl, date }) => {
         />
       </div>
       <div className="px-6 py-4">
-          <div className="text-gray-500 text-sm">{date}</div>
+          <div className="text-black text-sm">{date}</div>
         <div className="flex justify-between items-center mb-2">
           <div className="font-bold text-xl text-black">{title}</div>
         </div>
-        <p className="text-gray-700 text-base">{text}</p>
+        <p className="text-black text-base">{text}</p>
       </div>
     </div>
   );
