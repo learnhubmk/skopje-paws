@@ -1,7 +1,5 @@
-"use client"
-
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import React, { Suspense } from "react";
+import type { Metadata } from "next";
 import { Montserrat_Alternates } from "next/font/google";
 import "./globals.css";
 import Navigation from "../components/Navigation";
@@ -9,28 +7,25 @@ import Footer from "@/Footer";
 
 const montserrat = Montserrat_Alternates({ subsets: ['cyrillic'], weight: ['400', '500', '700'] });
 
-const RecaptchaProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const recaptchaKey: string | undefined = process?.env?.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-    return (
-        <GoogleReCaptchaProvider reCaptchaKey={recaptchaKey ?? "NOT DEFINED"}>
-            {children}
-        </GoogleReCaptchaProvider>
-    );
+export const metadata: Metadata = {
+    title: "Skopje Paws",
+    description: "The first personal dog walking services. Not just professionals, but animal lovers too.",
+    icons: {
+        icon: '/favicon.jpg',
+    },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en">
             <body className={`${montserrat.className} h-full w-full bg-white text-white`}>
-                <RecaptchaProvider>
-                    <Navigation />
-                    <main>
-                        <Suspense>
-                            {children}
-                        </Suspense>
-                    </main>
-                    <Footer />
-                </RecaptchaProvider>
+                <Navigation />
+                <main>
+                    <Suspense>
+                        {children}
+                    </Suspense>
+                </main>
+                <Footer />
             </body>
         </html>
     );
