@@ -1,5 +1,4 @@
 import Hero from "../components/Hero";
-import GalleryPage from "../components/Gallery";
 import Form from "@/Form";
 import Steps from "@/Steps/Steps";
 import EmblaCarousel from "@/Carousel/Carousel";
@@ -15,8 +14,6 @@ export default function Home() {
             <Hero />
             <Steps />
             <EmblaCarousel slides={SLIDES} options={OPTIONS} />
-            <GalleryPage folderName={`Showcase`} />
-            <GalleryPage folderName={`Services`} />
             <Form />
         </div>
     )

@@ -27,6 +27,9 @@ const config: Config = {
             borderRadius: {
                 '4xl': '2rem',
             }
+        },
+        height: {
+            customHeight: '37.5rem'
         }
     },
     plugins: [],
