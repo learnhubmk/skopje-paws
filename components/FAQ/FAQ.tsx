@@ -13,7 +13,7 @@ export default function FAQ() {
         <p className='font-medium text-xl'>Погледнете дали вашето прашање се наоѓа во овие прашања и договори. Доколку не се наоѓа, слобдно контактирајте не преку копчето подолу.</p>
         <LinkButton type={'link'} url={''} text={'Поставете прашање'} bgColor={'bg-orange'} textColor={'text-black'}></LinkButton>
       </div>
-      <div className="flex flex-col justify-between items-start gap-5">
+      <div className="flex flex-col justify-between items-start gap-5 size-fit">
         {data.faq.map(({ id, question, answer }) => <FAQAccordion key={id} answer={answer} question={question} />)}
       </div>
     </div>
