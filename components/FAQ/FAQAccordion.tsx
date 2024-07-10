@@ -6,7 +6,7 @@ export default function FAQAccordion({ question, answer }) {
     < div className="space-y-4 mx-auto size-full">
       <details className="group [&_summary::-webkit-details-marker]:hidden">
         <summary
-          className="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 border-2 border-orange rounded-full">
+          className="flex cursor-pointer items-center justify-between gap-1.5 rounded-full bg-gray-50 p-4 border-2 border-orange size-full">
           <h2 className='font-medium text-xl text-orange'>{question}</h2>
 
           <svg
