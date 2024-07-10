@@ -1,7 +1,7 @@
 import Hero from "../components/Hero";
 import GalleryPage from "../components/Gallery";
 import Form from "@/Form";
-import FAQAccordion from "../components/FAQ/FAQAccordion";
+import FAQ from "../components/FAQ/FAQ"
 
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
             <GalleryPage folderName={`Showcase`} />
             <GalleryPage folderName={`Services`} />
             <Form />
-            <FAQAccordion />
+            <FAQ />
         </div>
     )
 }
