@@ -3,6 +3,7 @@ import Steps from "@/Steps/Steps";
 import Services from "@/Services";
 import GalleryPage from "../components/Gallery";
 import Form from "@/Form";
+import Blogs from "@/BlogCard/blog";
 
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
             <GalleryPage folderName={`Showcase`} />
             <GalleryPage folderName={`Services`} />
             <Form />
+            <Blogs/>
         </div>
     )
 }
