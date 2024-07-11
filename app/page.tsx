@@ -1,8 +1,8 @@
 import Hero from "../components/Hero";
-import GalleryPage from "../components/Gallery";
 import Form from "@/Form";
 import Steps from "@/Steps/Steps";
 import Blogs from "@/BlogCard/blog";
+import ReactCalendar from "@/Calendar/ReactCalendar";
 
 
 export default function Home() {
@@ -10,10 +10,9 @@ export default function Home() {
         <div>
             <Hero />
             <Steps />
-            <GalleryPage folderName={`Showcase`} />
-            <GalleryPage folderName={`Services`} />
+            <ReactCalendar />
             <Form />
-            <Blogs/>
+            <Blogs />
         </div>
     )
 }
