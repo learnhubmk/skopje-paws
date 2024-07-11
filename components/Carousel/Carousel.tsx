@@ -7,18 +7,18 @@ import {
     PrevButton,
     NextButton,
     usePrevNextButtons
-} from './EmblaCarouselArrowButton';
-import useEmblaCarousel from 'embla-carousel-react';
+} from './CarouselButtons';
+import useCarousel from 'embla-carousel-react';
 
-type PropType = {
+type CarouselProps = {
     slides: number[];
     options?: EmblaOptionsType;
 };
 
-const EmblaCarousel = (props: PropType) => {
+const Carousel = (props: CarouselProps) => {
     const slideNames = ['Арија', 'Реа', 'Фреја', 'Јоги', 'Дона'];
     const { slides, options } = props;
-    const [emblaRef, emblaApi] = useEmblaCarousel(options);
+    const [emblaRef, emblaApi] = useCarousel(options);
     const {
         prevBtnDisabled,
         nextBtnDisabled,
@@ -54,4 +54,4 @@ const EmblaCarousel = (props: PropType) => {
     );
 };
 
-export default EmblaCarousel;
+export default Carousel;

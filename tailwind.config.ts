@@ -29,7 +29,7 @@ const config: Config = {
             }
         },
         height: {
-            customHeight: '37.5rem'
+            CarouselCardHeight: '37.5rem'
         }
     },
     plugins: [],
