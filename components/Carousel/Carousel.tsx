@@ -1,23 +1,34 @@
 'use client'
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SlideCard from './SlideCard';
-import { EmblaOptionsType } from 'embla-carousel';
 import {
     PrevButton,
     NextButton,
     usePrevNextButtons
 } from './CarouselButtons';
 import useCarousel from 'embla-carousel-react';
+import { EmblaOptionsType } from 'embla-carousel';
 
-type CarouselProps = {
-    slides: number[];
-    options?: EmblaOptionsType;
+type Slide = {
+    id: number;
+    name: string;
+    imageUrl: string;
 };
 
-const Carousel = (props: CarouselProps) => {
-    const slideNames = ['Арија', 'Реа', 'Фреја', 'Јоги', 'Дона'];
-    const { slides, options } = props;
+const Carousel = () => {
+    const [slides, setSlides] = useState<Slide[]>([]);
+
+    useEffect(() => {
+        fetch('/slides.json')
+            .then(response => response.json())
+            .then(data => setSlides(data));
+    }, []);
+
+    const options: EmblaOptionsType = {
+        loop: true,
+    };
+
     const [emblaRef, emblaApi] = useCarousel(options);
     const {
         prevBtnDisabled,
@@ -45,8 +56,13 @@ const Carousel = (props: CarouselProps) => {
             </div>
             <div className="overflow-hidden" ref={emblaRef}>
                 <div className="flex touch-pan-y">
-                    {slideNames.map((name, index) => (
-                        <SlideCard key={index} name={name} index={index} />
+                    {slides.map((slide, index) => (
+                        <SlideCard
+                            key={slide.id}
+                            name={slide.name}
+                            index={index}
+                            imageUrl={slide.imageUrl}
+                        />
                     ))}
                 </div>
             </div>
