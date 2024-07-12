@@ -26,6 +26,9 @@ const config: Config = {
       borderRadius: {
         "4xl": "2rem",
       },
+      height: {
+        "calendarHeight": "479px",
+      }
     },
   },
   plugins: [],

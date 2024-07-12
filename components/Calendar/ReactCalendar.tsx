@@ -1,46 +1,49 @@
 'use client'
 
 import Calendar from "react-calendar";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { add, format } from 'date-fns';
 import { BREAK_TIME, INTERVAL, STORE_CLOSING_TIME, STORE_OPENING_TIME } from "./config";
-
 
 interface DateType {
     justDate: Date | null,
     dateTime: Date | null
 }
 
-
 const ReactCalendar = () => {
     const [showForm, setShowForm] = useState(false);
     const [date, setDate] = useState<DateType>({
         justDate: null,
         dateTime: null,
-    })
+    });
+    const [times, setTimes] = useState<{ start: Date; end: Date; }[]>([]);
 
-    const getTimes = () => {
-        if (!date.justDate) return;
+    useEffect(() => {
+        const getTimes = () => {
+            if (!date.justDate) return [];
 
-        const { justDate } = date;
+            const { justDate } = date;
 
-        const beginning = add(justDate, { hours: STORE_OPENING_TIME });
-        const end = add(justDate, { hours: STORE_CLOSING_TIME });
-        const interval = INTERVAL;
-        const breakTime = BREAK_TIME;
+            const beginning = add(justDate, { hours: STORE_OPENING_TIME });
+            const end = add(justDate, { hours: STORE_CLOSING_TIME });
+            const interval = INTERVAL;
+            const breakTime = BREAK_TIME;
 
-        const times = [];
-        let current = beginning;
+            const newTimes = [];
+            let current = beginning;
 
-        while (current <= end) {
-            const nextInterval = add(current, { minutes: interval });
-            if (nextInterval > end) break;
-            times.push({ start: current, end: nextInterval });
-            current = add(nextInterval, { minutes: breakTime });
-        }
+            while (current <= end) {
+                const nextInterval = add(current, { minutes: interval });
+                if (nextInterval > end) break;
+                newTimes.push({ start: current, end: nextInterval });
+                current = add(nextInterval, { minutes: breakTime });
+            }
 
-        return times;
-    };
+            return newTimes;
+        };
+
+        setTimes(getTimes());
+    }, [date.justDate]);
 
     const handleButtonClick = (start: Date) => {
         setDate((prev) => ({ ...prev, dateTime: start }));
@@ -52,22 +55,29 @@ const ReactCalendar = () => {
         setShowForm(false);
     };
 
-    const times = getTimes()
-
     return (
         <div className="flex items-center justify-center">
-            <div className="flex flex-row items-center justify-center rounded-3xl h-80 w-80">
+            <div className="flex flex-row items-center justify-center rounded-3xl relative">
                 <Calendar
                     minDate={new Date()}
-                    onClickDay={(selectedDate) => setDate((prev) => ({ ...prev, justDate: selectedDate }))}
+                    onClickDay={(selectedDate) => {
+                        setDate({
+                            justDate: selectedDate,
+                            dateTime: null
+                        });
+                        setShowForm(false);
+                    }}
                     view="month"
-                    className="REACT-CALENDAR p-2"
+                    className="react-calendar p-2"
                 />
                 {date.justDate && !showForm && (
-                    <div className="flex gap-4 flex-wrap">
+                    <div className="flex flex-col justify-end w-80 items-center h-calendarHeight rounded-3xl shadow-xl">
+                        <div className="bg-orange h-16 w-full rounded-t-3xl flex items-center justify-center text-black">
+                            {format(date.justDate, 'MMMM dd EEEE')}
+                        </div>
                         {times.map(({ start, end }) => (
                             <button
-                                className="text-black bg-orange flex flex-row p-2 m-1 rounded"
+                                className="text-black p-2 m-[3px] rounded-4xl border-2 border-orange w-64 h-8 items-center flex justify-center text-lg"
                                 key={start.toString()}
                                 type="button"
                                 onClick={() => handleButtonClick(start)}

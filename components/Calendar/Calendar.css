@@ -1,5 +1,6 @@
 .react-calendar {
-    width: 450px;
+    height: 469px;
+    width: 545px;
     max-width: 100%;
     background: rgb(255, 255, 255);
     border-radius: 15px;
@@ -85,7 +86,7 @@
 
 /* Each day should be round when hovered */
 .react-calendar__month-view__days__day {
-    padding: 5px;
+    padding: 15px;
     background-clip: content-box !important;
     border-radius: 50% !important;
 }
@@ -164,8 +165,8 @@
 }
 
 .react-calendar__tile:disabled {
-    background-color: #f0f0f0;
-    color: rgb(107 114 128);
+    /* background-color: #f0f0f0; */
+    color: rgb(180, 180, 180);
 }
 
 .react-calendar__tile:enabled:hover,
@@ -175,7 +176,7 @@
 
 .react-calendar__tile--now {
     border-radius: 50%;
-    background: rgb(238 242 255);
+    /* background: rgb(238 242 255); */
 }
 
 .react-calendar__tile--now:enabled:hover,
