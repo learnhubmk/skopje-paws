@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en">
-            <body className={`${montserrat.className} h-full w-full bg-white text-white`}>
+            <body className={`${montserrat.className} h-full w-full bg-white text-black`}>
                 <Navigation />
                 <main>
                     <Suspense>
