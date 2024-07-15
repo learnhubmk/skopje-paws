@@ -1,9 +1,12 @@
 'use client'
 
+import { Montserrat } from "next/font/google";
 import LinkButton from "@/LinkButton"
 import React, { useState } from 'react'
 import FAQAccordion from "./FAQAccordion"
 import data from "./FAQ.json"
+
+const montserrat = Montserrat({ subsets: ['cyrillic'], weight: ['400', '500', '700'] });
 
 
 export default function FAQ() {
@@ -14,7 +17,7 @@ export default function FAQ() {
       <div className="flex flex-col justify-between items-start gap-5">
         <h2 className='text-5xl font-bold'>Често поставувани
           прашања</h2>
-        <p className='font-medium text-xl'>Погледнете дали вашето прашање се наоѓа во овие прашања и договори. Доколку не се наоѓа, слобдно контактирајте не преку копчето подолу.</p>
+        <p className={`'font-medium text-xl' ${montserrat.className}`}>Погледнете дали вашето прашање се наоѓа во овие прашања и договори. Доколку не се наоѓа, слобдно контактирајте не преку копчето подолу.</p>
         <LinkButton type={'link'} url={''} text={'Поставете прашање'} bgColor={'bg-orange'} textColor={'text-black'}></LinkButton>
       </div>
       <div className="flex flex-col justify-between items-start gap-5 size-full">
