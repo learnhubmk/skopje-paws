@@ -10,7 +10,7 @@ export default function FAQ() {
   const [activeId, setActiveId] = useState(null)
 
   return (
-    <div className="grid grid-cols-2 gap-10 p-10 w-4/5 m-auto">
+    <div className="grid lg:grid-cols-2 gap-10 p-10 w-4/5 m-auto sm:grid-cols-1">
       <div className="flex flex-col justify-between items-start gap-5">
         <h2 className='text-5xl font-bold'>Често поставувани
           прашања</h2>
