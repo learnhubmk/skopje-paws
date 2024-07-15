@@ -1,30 +1,19 @@
 import React from 'react'
 
 
-export default function FAQAccordion({ question, answer }) {
+export default function FAQAccordion({ question, answer, isActive }) {
   return (
-    < div className="space-y-4 mx-auto size-full">
-      <details className="group [&_summary::-webkit-details-marker]:hidden">
-        <summary
-          className="flex cursor-pointer items-center justify-between gap-1.5 rounded-full bg-gray-50 p-4 border-2 border-orange size-full">
-          <h2 className='font-medium text-xl text-orange'>{question}</h2>
+    <div className="space-y-4 mx-auto flex size-full">
+      <div className={`border-2 border-orange p-5 flex justify-between ${isActive ? 'rounded-3xl bg-orange flex-col' : 'rounded-full size-full'}`} >
+        <h2 className={`font-medium text-xl size-full flex items-center justify-between ${isActive ? 'text-black' : 'text-orange'}`}>
+          {question}
+          <svg className={`transition-all duration-300 ${isActive ? 'rotate-180' : 'fill-orange'}`} xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z" /></svg>
+        </h2>
 
-          <svg
-            className="size-5 shrink-0 transition duration-300 group-open:-rotate-180 path-orange"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="orange"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </summary>
-
-        <p className="mt-4 p-5 leading-relaxed font-medium text-xl border-2 border-orange rounded-3xl bg-orange">
-          {answer}
+        <p className={`transition-all duration-300 mt-4 font-medium text-xl rounded-3xl ${isActive ? 'h-auto p-5' : 'h-0'}`}>
+          {isActive && answer}
         </p>
-      </details>
-
+      </div>
     </div >
   )
 };

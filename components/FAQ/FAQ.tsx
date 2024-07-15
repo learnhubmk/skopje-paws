@@ -1,10 +1,14 @@
+'use client'
+
 import LinkButton from "@/LinkButton"
-import React from 'react'
+import React, { useState } from 'react'
 import FAQAccordion from "./FAQAccordion"
 import data from "./FAQ.json"
 
 
 export default function FAQ() {
+  const [activeId, setActiveId] = useState(null)
+
   return (
     <div className="grid grid-cols-2 gap-10 p-10 w-4/5 m-auto">
       <div className="flex flex-col justify-between items-start gap-5">
@@ -14,7 +18,17 @@ export default function FAQ() {
         <LinkButton type={'link'} url={''} text={'Поставете прашање'} bgColor={'bg-orange'} textColor={'text-black'}></LinkButton>
       </div>
       <div className="flex flex-col justify-between items-start gap-5 size-full">
-        {data.faq.map(({ id, question, answer }) => <FAQAccordion key={id} answer={answer} question={question} />)}
+        {data.faq.map(({ id, question, answer }) =>
+          <div className="flex grow size-full items-center justify-between" onClick={() => {
+            if (activeId === id) {
+              setActiveId(null)
+            } else {
+              setActiveId(id)
+            }
+          }} key={id}>
+            <FAQAccordion answer={answer} question={question} isActive={activeId === id} />
+          </div>
+        )}
       </div>
     </div>
   )
