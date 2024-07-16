@@ -17,6 +17,7 @@ const config: Config = {
       white: "#ffffff",
       black: "#000",
       charcoal: "#2C2C2C",
+      gray: "#8F8F8F"
     },
     extend: {
       spacing: {
