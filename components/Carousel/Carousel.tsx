@@ -27,6 +27,7 @@ const Carousel = () => {
 
     const options: EmblaOptionsType = {
         loop: true,
+        align: 'start'
     };
 
     const [emblaRef, emblaApi] = useCarousel(options);
