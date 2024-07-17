@@ -26,11 +26,11 @@ const config: Config = {
             },
             borderRadius: {
                 '4xl': '2rem',
+            },
+            height: {
+                CarouselCardHeight: '37.5rem'
             }
         },
-        height: {
-            CarouselCardHeight: '37.5rem'
-        }
     },
     plugins: [],
 };

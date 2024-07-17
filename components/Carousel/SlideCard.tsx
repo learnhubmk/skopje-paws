@@ -13,7 +13,7 @@ const SlideCard = ({ index, name, imageUrl }: SlideCardProps) => {
             className={`rounded-3xl flex-0 flex-shrink-0 basis-[70%] max-w-sm lg:max-w-lg min-w-0 ${index > 0 ? '-ml-6' : '-ml-4'} relative`}
             style={{ zIndex: 5 + index }}
         >
-            <div className="relative border-orange border-4 rounded-3xl overflow-hidden sm:h-CarouselCardHeight h-80">
+            <div className="relative border-orange border-4 rounded-3xl overflow-hidden h-80 sm:h-CarouselCardHeight">
                 <Image
                     src={imageUrl}
                     alt={name}
