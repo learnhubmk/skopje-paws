@@ -2,7 +2,7 @@
 
 import Calendar from "react-calendar";
 import { useState, useEffect } from 'react';
-import { add, format } from 'date-fns';
+import { add, format, startOfDay } from 'date-fns';
 import { BREAK_TIME, INTERVAL, STORE_CLOSING_TIME, STORE_OPENING_TIME } from "./config";
 
 interface DateType {
@@ -11,9 +11,10 @@ interface DateType {
 }
 
 const ReactCalendar = () => {
+    const today = startOfDay(new Date()); // Initialize today's date
     const [showForm, setShowForm] = useState(false);
     const [date, setDate] = useState<DateType>({
-        justDate: null,
+        justDate: today,
         dateTime: null,
     });
     const [times, setTimes] = useState<{ start: Date; end: Date; }[]>([]);
