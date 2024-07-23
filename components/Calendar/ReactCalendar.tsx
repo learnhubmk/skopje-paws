@@ -11,7 +11,7 @@ interface DateType {
 }
 
 const ReactCalendar = () => {
-    const today = startOfDay(new Date()); // Initialize today's date
+    const today = startOfDay(new Date());
     const [showForm, setShowForm] = useState(false);
     const [date, setDate] = useState<DateType>({
         justDate: today,

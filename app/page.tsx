@@ -9,8 +9,8 @@ export default function Home() {
     return (
         <div>
             <Hero />
-            <Steps />
             <ReactCalendar />
+            <Steps />
             <Form />
             <Blogs />
         </div>
