@@ -8,7 +8,6 @@ export default function RichText() {
 
   const { quillRef } = useQuill({
     placeholder,
-    formats: [] // Added this to remove console error
   });
 
   return (
