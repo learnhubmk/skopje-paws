@@ -13,11 +13,26 @@ interface DateType {
 const ReactCalendar = () => {
     const today = startOfDay(new Date());
     const [showForm, setShowForm] = useState(false);
+    const [showCalendar, setShowCalendar] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
     const [date, setDate] = useState<DateType>({
         justDate: today,
         dateTime: null,
     });
     const [times, setTimes] = useState<{ start: Date; end: Date; }[]>([]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         const getTimes = () => {
@@ -46,6 +61,17 @@ const ReactCalendar = () => {
         setTimes(getTimes());
     }, [date.justDate]);
 
+    const handleDateClick = (selectedDate: Date) => {
+        setDate({
+            justDate: selectedDate,
+            dateTime: null
+        });
+        if (isMobile) {
+            setShowCalendar(false);
+        }
+        setShowForm(false);
+    };
+
     const handleButtonClick = (start: Date) => {
         setDate((prev) => ({ ...prev, dateTime: start }));
         setShowForm(true);
@@ -58,25 +84,24 @@ const ReactCalendar = () => {
 
     const handleBackButtonClick = () => {
         setShowForm(false);
+        setShowCalendar(true);
     };
 
     return (
         <div className="flex items-center justify-center">
-            <div className="flex flex-row items-center justify-center rounded-3xl relative">
-                <Calendar
-                    minDate={new Date()}
-                    onClickDay={(selectedDate) => {
-                        setDate({
-                            justDate: selectedDate,
-                            dateTime: null
-                        });
-                        setShowForm(false);
-                    }}
-                    view="month"
-                    className="react-calendar p-2"
-                />
+            <div className="flex md:flex-row items-center justify-center rounded-3xl relative w-full md:w-auto p-10 sm:p-0">
+                {showCalendar && (
+                    <div className={`md:block ${showForm ? 'hidden' : 'block'} transition-all`}>
+                        <Calendar
+                            minDate={new Date()}
+                            onClickDay={handleDateClick}
+                            view="month"
+                            className="react-calendar p-2"
+                        />
+                    </div>
+                )}
                 {date.justDate && !showForm && (
-                    <div className="flex flex-col w-80 items-center h-calendarHeight rounded-3xl shadow-xl gap-1">
+                    <div className={`md:flex flex-col w-full md:w-80 items-center h-calendarHeight rounded-3xl shadow-xl gap-1 ${!showCalendar && date.justDate ? 'flex' : 'hidden'}`}>
                         <div className="bg-orange mb-1 h-16 w-full rounded-t-3xl flex items-center justify-center text-black">
                             {format(date.justDate, 'MMMM dd, EEEE')}
                         </div>
@@ -93,7 +118,7 @@ const ReactCalendar = () => {
                     </div>
                 )}
                 {showForm && (
-                    <div className="flex flex-col w-80 items-center h-calendarHeight rounded-3xl shadow-xl">
+                    <div className="flex flex-col w-full md:w-80 items-center h-calendarHeight rounded-3xl shadow-xl">
                         <div className="bg-orange h-16 w-full rounded-t-3xl flex items-center justify-center text-black">
                             {format(date.justDate, 'MMMM dd, EEEE')}
                         </div>
