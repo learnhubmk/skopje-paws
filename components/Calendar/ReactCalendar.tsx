@@ -89,7 +89,7 @@ const ReactCalendar = () => {
 
     return (
         <div className="flex items-center justify-center">
-            <div className="flex md:flex-row items-center justify-center rounded-3xl relative w-full md:w-auto p-10 sm:p-0">
+            <div className="flex md:flex-row items-center justify-center rounded-3xl relative w-full md:w-auto p-10 sm:p-0 gap-8">
                 {showCalendar && (
                     <div className={`md:block ${showForm ? 'hidden' : 'block'} transition-all`}>
                         <Calendar
