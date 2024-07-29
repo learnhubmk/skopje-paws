@@ -1,11 +1,22 @@
 import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { Montserrat_Alternates } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Navigation from "../components/Navigation";
 import Footer from "@/Footer";
 
-const montserrat = Montserrat_Alternates({ subsets: ['cyrillic'], weight: ['400', '500', '700'] });
+
+const montserrat = Montserrat({
+    subsets: ['cyrillic'],
+    variable: '--font-montserrat',
+    weight: ['400', '500', '700']
+});
+const montserratAlternates = Montserrat_Alternates({
+    subsets: ['cyrillic'],
+    variable: '--font-montserrat-alternates',
+    weight: ['400', '500', '700']
+});
 
 export const metadata: Metadata = {
     title: "Skopje Paws",
@@ -17,8 +28,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html lang="en">
-            <body className={`${montserrat.className} h-full w-full bg-white text-black`}>
+        <html className={`${montserratAlternates.variable} ${montserrat.variable}`} lang="en">
+            <body className="font-montserrat-alternates h-full w-full bg-white text-black">
                 <Navigation />
                 <main>
                     <Suspense>

@@ -15,7 +15,7 @@ export default function Home() {
             <GalleryPage folderName={`Services`} />
             <Form />
             <FAQ />
-            <Blogs/>
+            <Blogs />
         </div>
     )
 }

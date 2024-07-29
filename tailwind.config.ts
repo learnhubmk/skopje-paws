@@ -19,6 +19,10 @@ const config: Config = {
       charcoal: "#2C2C2C",
     },
     extend: {
+      fontFamily: {
+        montserrat: ['var(--font-montserrat)'],
+        'montserrat-alternates' : ['var(--font-montserrat-alternates)']
+      },
       spacing: {
         "128": "32rem",
         "144": "36rem",
