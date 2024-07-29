@@ -101,13 +101,13 @@ const ReactCalendar = () => {
                     </div>
                 )}
                 {date.justDate && !showForm && (
-                    <div className={`md:flex flex-col w-full md:w-80 items-center h-calendarHeight rounded-3xl shadow-xl gap-1 ${!showCalendar && date.justDate ? 'flex' : 'hidden'}`}>
+                    <div className={`sm:flex flex-col w-full md:w-80 items-center h-calendarHeight rounded-3xl shadow-xl gap-1 ${!showCalendar && date.justDate ? 'flex' : 'hidden'}`}>
                         <div className="bg-orange mb-1 h-16 w-full rounded-t-3xl flex items-center justify-center text-black">
                             {format(date.justDate, 'MMMM dd, EEEE')}
                         </div>
                         {times.map(({ start, end }) => (
                             <button
-                                className="text-black p-2 rounded-4xl border border-orange w-64 h-8 items-center flex justify-center text-lg"
+                                className="text-black p-2 rounded-4xl border border-orange max-w-full w-64 h-8 items-center flex justify-center text-lg"
                                 key={start.toString()}
                                 type="button"
                                 onClick={() => handleButtonClick(start)}
