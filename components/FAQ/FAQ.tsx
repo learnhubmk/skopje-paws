@@ -30,7 +30,7 @@ export default function FAQ() {
         <a href="#" className="font-montserrat text-black bg-orange font-medium rounded-lg text-base px-5 py-2.5 focus:outline-none">Поставете Прашање</a>
       </div>
       <div className="flex flex-col justify-between items-center gap-5 size-full">
-        {data.faq.map(renderFaqAccordion)};
+        {data.faq.map(renderFaqAccordion)}
       </div>
     </div>
   )
