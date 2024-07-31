@@ -20,6 +20,11 @@ const ReactCalendar = () => {
         dateTime: null,
     });
     const [times, setTimes] = useState<{ start: Date; end: Date; }[]>([]);
+    const [formData, setFormData] = useState({
+        dogBreed: "",
+        walkType: "",
+        walkTime: ""
+    });
 
     useEffect(() => {
         const handleResize = () => {
@@ -87,6 +92,15 @@ const ReactCalendar = () => {
         setShowCalendar(true);
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setFormData(prevData => ({
+            ...prevData,
+            [e.target.id]: e.target.value
+        }));
+    };
+
+    const isFormValid = formData.dogBreed !== "";
+
     return (
         <div className="flex items-center justify-center">
             <div className="flex md:flex-row items-center justify-center rounded-3xl relative w-full md:w-auto p-10 sm:p-0 gap-8">
@@ -118,66 +132,79 @@ const ReactCalendar = () => {
                     </div>
                 )}
                 {showForm && (
-                    <div className="flex flex-col w-full md:w-80 items-center h-calendarHeight rounded-3xl shadow-xl">
-                        <div className="bg-orange h-16 w-full rounded-t-3xl flex items-center justify-center text-black">
-                            {format(date.justDate, 'MMMM dd, EEEE')}
-                        </div>
-                        <button className="text-black flex w-10/12 mt-4" onClick={handleBackButtonClick}>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={2}
-                                stroke="currentColor"
-                                className="w-6 h-6 mr-1"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                            </svg>
-                            Назад кон време
-                        </button>
-                        <form onSubmit={handleFormSubmit} className="flex flex-col items-center gap-2 mt-4 w-10/12">
-                            <label htmlFor="race" className="w-full justify-start flex text-black">Раса на куче</label>
-                            <input
-                                id="race"
-                                type="text"
-                                placeholder="Доберман"
-                                className="text-base py-1 pl-4 border border-gray rounded-4xl text-black w-full mt-1 mb-3"
-                                required
-                            />
+    <div className="flex flex-col w-full md:w-80 items-center h-calendarHeight rounded-3xl shadow-xl">
+        <div className="bg-orange h-16 w-full rounded-t-3xl flex items-center justify-center text-black flex-col">
+            {format(date.justDate, 'MMMM dd, EEEE')}
+            {date.dateTime && (
+            <div className="text-black flex">
+                 {format(date.dateTime, 'kk:mm')} - {format(add(date.dateTime, { minutes: INTERVAL }), 'kk:mm')}
+            </div>
+        )}
+        </div>
+        
+        <button className="text-black flex w-10/12 mt-4" onClick={handleBackButtonClick}>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6 mr-1"
+            >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            Назад кон време
+        </button>
+        <form onSubmit={handleFormSubmit} className="flex flex-col items-center gap-2 mt-4 w-10/12">
+            <label htmlFor="dogBreed" className="w-full justify-start flex text-black">Раса на куче</label>
+            <input
+                id="dogBreed"
+                type="text"
+                placeholder="Доберман"
+                className="text-base py-1 pl-4 border border-gray rounded-4xl text-black w-full mt-1 mb-3"
+                value={formData.dogBreed}
+                onChange={handleInputChange}
+                required
+            />
 
-                            <label htmlFor="select1" className="w-full justify-start flex text-black">Тип на прошетка</label>
-                            <select
-                                id="select1"
-                                className="py-1 pl-4 border border-gray rounded-4xl text-black w-full mt-1 mb-3"
-                                required
-                            >
-                                <option value="" disabled selected hidden>Социјализација</option>
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                            </select>
+            <label htmlFor="walkType" className="w-full justify-start flex text-black">Тип на прошетка</label>
+            <select
+                id="walkType"
+                className="py-1 pl-4 border border-gray rounded-4xl text-black w-full mt-1 mb-3"
+                value={formData.walkType}
+                onChange={handleInputChange}
+                required
 
-                            <label htmlFor="select2" className="w-full justify-start flex text-black">Времетраење на прошетка</label>
-                            <select
-                                id="select2"
-                                className="py-1 pl-4 border border-gray rounded-4xl text-black w-full mt-1 mb-3"
-                                required
-                            >
-                                <option value="" disabled selected hidden>1:30 минути</option>
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                            </select>
+            >
+                <option value="option1">Социјализација</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+            </select>
 
-                            <button
-                                type="submit"
-                                className="bg-orange text-white p-2 rounded-xl mt-9 w-full"
-                            >
-                                Закажи термин
-                            </button>
-                        </form>
-                    </div>
-                )}
+            <label htmlFor="walkTime" className="w-full justify-start flex text-black">Времетраење на прошетка</label>
+            <select
+                id="walkTime"
+                className="py-1 pl-4 border border-gray rounded-4xl text-black w-full mt-1 mb-3"
+                value={formData.walkTime}
+                onChange={handleInputChange}
+                required
+            >
+                <option value="option1">1:30 минути</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+            </select>
+
+            <button
+                type="submit"
+                className={`p-2 rounded-xl mt-9 w-full ${isFormValid ? 'bg-orange text-white' : 'bg-cream text-gray'}`}
+                                disabled={!isFormValid}
+            >
+                Закажи термин
+            </button>
+        </form>
+    </div>
+)}
+
             </div>
         </div>
     );
