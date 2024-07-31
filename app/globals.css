@@ -5,3 +5,11 @@
 .grecaptcha-badge {
   visibility: hidden;
 }
+
+.ql-snow {
+  border: 0 !important;
+}
+
+.ql-toolbar {
+  border-bottom: 1px solid black !important;
+}
