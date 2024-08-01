@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    container_name: paws-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - paws-db:/var/lib/postgresql/data
+    networks:
+      - paws-network
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgAdmin
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "5050:80"
+    volumes:
+      - pgAdmin:/var/lib/pgadmin
+    networks:
+      - paws-network
+
+networks:
+  paws-network:
+    name: paws-network
+    driver: bridge
+
+volumes:
+  paws-db:
+    name: paws-db
+  pgAdmin:
+    name: pgAdmin
