@@ -6,12 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@types/pg": "^8.11.6",
+    "drizzle-kit": "^0.23.1",
+    "drizzle-orm": "^0.32.1",
     "embla-carousel": "^8.1.6",
     "embla-carousel-react": "^8.1.6",
     "next": "14.2.3",
+    "pg": "^8.12.0",
     "quill": "^2.0.2",
     "react": "^18",
     "react-dom": "^18",
