@@ -13,3 +13,10 @@
 .ql-toolbar {
   border-bottom: 1px solid black !important;
 }
+
+.article-reset * {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: black !important;
+  background-color: white !important;
+}

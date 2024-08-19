@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import Image from "next/image";
 
@@ -6,26 +8,30 @@ type BlogCardProps = {
   text: string;
   imageUrl: string;
   date: string;
+  slugURL: string;
 };
 
-const BlogCard: React.FC<BlogCardProps> = ({ title, text, imageUrl, date }) => {
+const BlogCard: React.FC<BlogCardProps> = ({ title, text, imageUrl, date, slugURL }) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
-      <div className="relative w-full h-64 rounded-lg overflow-hidden">
+    <div
+      onClick={() => (window.location.href = `/blogs/${slugURL}`)}
+      className="flex flex-col justify-between w-full max-w-xs lg:max-w-sm rounded-2xl overflow-hidden shadow-lg hover:cursor-pointer text-black"
+    >
+      <div className="relative w-full pb-[60%] rounded-2xl overflow-hidden">
         <Image
-          className="absolute inset-0 w-full h-full"
           src={imageUrl}
           alt={title}
-          layout="fill"
-          objectFit="cover"
+          fill
+          className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
-      <div className="px-6 py-4">
-          <div className="text-black text-sm">{date}</div>
-        <div className="flex justify-between items-center mb-2">
-          <div className="font-bold text-xl text-black">{title}</div>
-        </div>
-        <p className="text-black text-base">{text}</p>
+      <div className="px-4 py-3 md:px-6 md:py-4">
+        <div className="text-gray-600 text-xs md:text-sm pb-2">{date}</div>
+        <div className="pb-1 font-bold text-lg md:text-xl">{title}</div>
+        <article
+          className="text-gray-700 text-sm h-20 md:h-24 overflow-y-hidden"
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
       </div>
     </div>
   );

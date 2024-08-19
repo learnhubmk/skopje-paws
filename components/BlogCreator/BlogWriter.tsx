@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import React, { FormEvent } from "react"
-import RichText from "./RichText/RichText"
-import { addBlog } from "../../actions/blogActions"
+import React, { FormEvent } from "react";
+import RichText from "./RichText/RichText";
+import { addBlog } from "../../actions/blogActions";
 
-const cyrillicToLatinMap = {
+const cyrillicToLatinMap: Record<string, string> = {
     'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Ѓ': 'Gj', 'Е': 'E', 'Ж': 'Zh',
     'З': 'Z', 'Ѕ': 'Dz', 'И': 'I', 'Ј': 'J', 'К': 'K', 'Л': 'L', 'Љ': 'Lj', 'М': 'M',
     'Н': 'N', 'Њ': 'Nj', 'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'Ќ': 'Kj',
@@ -15,18 +15,28 @@ const cyrillicToLatinMap = {
     'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'ch', 'џ': 'dzh', 'ш': 'sh'
 };
 
-function transliterateCyrillicToLatin(str) {
+function transliterateCyrillicToLatin(str: string): string {
     return str.split('').map(char => cyrillicToLatinMap[char] || char).join('');
 }
 
-export default function BlogWriter() {
+interface BlogWriterProps {
+    initialTitle?: string;
+    initialContent?: string;
+}
+
+export default function BlogWriter({ initialTitle = '', initialContent = '' }: BlogWriterProps) {
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
+        const content = formData.get("content") as string;
+        if (content.length < 64) {
+            alert("Содржината мора да е минимум 64 карактери");
+            return;
+        }
+
         const title = formData.get("title") as string;
         const transliteratedTitle = transliterateCyrillicToLatin(title);
-        const content = formData.get("content") as string;
         const slugURL = transliteratedTitle.toLowerCase()
             .replace(/\s+/g, '-') // Replace spaces with -
             .replace(/[^\w\-]+/g, '') // Remove all non-word chars
@@ -40,10 +50,11 @@ export default function BlogWriter() {
         }
 
         try {
-            const response = await addBlog(title, content, slugURL);
+            const currentSlug = window.location.pathname.split('/').filter(Boolean).pop();
+            const response = await addBlog(title, content, slugURL, currentSlug);
             if (response.status === 200) {
                 alert(response.message);
-                location.replace("/");
+                location.replace(`/blogs/${slugURL}`);
             } else {
                 alert(`Error ${response.status}: ` + response.message);
             }
@@ -58,15 +69,16 @@ export default function BlogWriter() {
                 <input
                     name="title"
                     type="text"
+                    defaultValue={initialTitle}
                     className="rounded-xl p-4 w-full border placeholder-grey focus:outline-orange"
                     placeholder="Наслов"
                     required
                 />
             </div>
-            <RichText name="content" />
+            <RichText name="content" initialValue={initialContent} />
             <button type="submit" className="rounded-xl bg-orange p-4 w-full">
                 Зачувај Блог
             </button>
         </form>
-    )
+    );
 }

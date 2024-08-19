@@ -1,14 +1,15 @@
 "use client";
 
-import "quill/dist/quill.snow.css"; // Add css for snow theme
+import "quill/dist/quill.snow.css"; // Add CSS for snow theme
 import { useQuill } from "react-quilljs";
 import { useEffect, useRef } from "react";
 
 interface RichTextProps {
   name: string;
+  initialValue?: string;
 }
 
-export default function RichText({ name }: RichTextProps) {
+export default function RichText({ name, initialValue = '' }: RichTextProps) {
   const placeholder = "Содржина";
 
   const { quillRef, quill } = useQuill({
@@ -19,13 +20,14 @@ export default function RichText({ name }: RichTextProps) {
 
   useEffect(() => {
     if (quill) {
+      quill.root.innerHTML = initialValue; // Set initial value
       quill.on("text-change", () => {
         if (inputRef.current) {
           inputRef.current.value = quill.root.innerHTML;
         }
       });
     }
-  }, [quill]);
+  }, [quill, initialValue]);
 
   return (
     <div className="flex flex-col w-full h-128 rounded-xl border placeholder-grey">
