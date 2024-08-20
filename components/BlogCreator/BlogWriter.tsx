@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent } from "react";
+import React, { FormEvent, useRef } from "react";
 import RichText from "./RichText/RichText";
 import { addBlog } from "../../actions/blogActions";
 
@@ -25,12 +25,15 @@ interface BlogWriterProps {
 }
 
 export default function BlogWriter({ initialTitle = '', initialContent = '' }: BlogWriterProps) {
+    const quillRef = useRef<{ getQuill: () => any } | null>(null);
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
         const content = formData.get("content") as string;
-        if (content.length < 64) {
+        const quill = quillRef.current?.getQuill();
+        const sanitizedText = quill.getText().trim();
+        if (sanitizedText.length < 64) {
             alert("Содржината мора да е минимум 64 карактери");
             return;
         }
@@ -51,7 +54,7 @@ export default function BlogWriter({ initialTitle = '', initialContent = '' }: B
 
         try {
             const currentSlug = window.location.pathname.split('/').filter(Boolean).pop();
-            const response = await addBlog(title, content, slugURL, currentSlug);
+            const response = await addBlog(slugURL, title, content, sanitizedText, currentSlug);
             if (response.status === 200) {
                 alert(response.message);
                 location.replace(`/blogs/${slugURL}`);
@@ -75,7 +78,7 @@ export default function BlogWriter({ initialTitle = '', initialContent = '' }: B
                     required
                 />
             </div>
-            <RichText name="content" initialValue={initialContent} />
+            <RichText ref={quillRef} name="content" initialValue={initialContent} />
             <button type="submit" className="rounded-xl bg-orange p-4 w-full">
                 Зачувај Блог
             </button>

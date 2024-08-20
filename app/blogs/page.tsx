@@ -19,7 +19,7 @@ export default async function Blogs({ limit }: BlogProps) {
     ];
 
     return (
-        <div className="flex flex-row flex-wrap justify-center font-sans p-8 gap-8">
+        <div className="flex flex-row flex-wrap justify-center font-sans py-8 px-2 sm:px-8 gap-8">
             {contentData.blog.map((blog, index) => {
                 const createdAt = new Date(blog.createdAt);
                 const formattedDate = `${createdAt.getDate().toString().padStart(2, '0')}.${(createdAt.getMonth() + 1).toString().padStart(2, '0')}.${createdAt.getFullYear()}`;
@@ -30,7 +30,7 @@ export default async function Blogs({ limit }: BlogProps) {
                     <BlogCard
                         key={blog.slugURL}
                         title={blog.title}
-                        text={blog.content}
+                        text={blog.sanitizedText}
                         imageUrl={imagePath}
                         date={formattedDate}
                         slugURL={blog.slugURL}

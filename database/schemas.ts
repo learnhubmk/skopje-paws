@@ -1,10 +1,10 @@
-import { pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const blogs = pgTable("blogs", {
-  id: uuid("id").notNull().primaryKey().defaultRandom(),
-  title: varchar("title", { length: 255 }).notNull(),
-  content: varchar("content").notNull(),
   slugURL: varchar("slugURL").notNull().unique(),
+  title: varchar("title", { length: 255 }).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+  sanitizedText: varchar("sanitizedText").notNull(),
+  content: varchar("content").notNull(),
 });

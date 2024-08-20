@@ -4,15 +4,16 @@ import { db } from "../database/database";
 import { blogs } from "../database/schemas";
 import { eq, desc } from "drizzle-orm";
 
-export const addBlog = async (title: string, content: string, slugURL: string, currentSlug: string): Promise<{ status: number; message: string }> => {
+export const addBlog = async (slugURL: string, title: string, content: string, sanitizedText: string, currentSlug: string): Promise<{ status: number; message: string }> => {
     try {
         const existingBlog = await db.select().from(blogs).where(eq(blogs.slugURL, currentSlug)).limit(1);
 
         if (existingBlog.length > 0) {
             const updateData = {
+                slugURL,
                 title,
                 content,
-                slugURL,
+                sanitizedText,
                 updatedAt: new Date(),
             };
             await db
@@ -22,9 +23,10 @@ export const addBlog = async (title: string, content: string, slugURL: string, c
             return { status: 200, message: 'Blog updated successfully!' };
         } else {
             const newBlog = {
+                slugURL,
                 title,
                 content,
-                slugURL,
+                sanitizedText,
             };
             await db.insert(blogs).values(newBlog);
             return { status: 200, message: 'Blog created successfully!' };
@@ -38,6 +40,7 @@ interface Blog {
     slugURL: string;
     title: string;
     content: string;
+    sanitizedText: string;
     createdAt: Date;
     updatedAt: Date;
 }

@@ -1,22 +1,23 @@
-"use client";
-
-import "quill/dist/quill.snow.css"; // Add CSS for snow theme
+import "quill/dist/quill.snow.css";
 import { useQuill } from "react-quilljs";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 
 interface RichTextProps {
   name: string;
   initialValue?: string;
 }
 
-export default function RichText({ name, initialValue = '' }: RichTextProps) {
-  const placeholder = "Содржина";
-
+const RichText = forwardRef(({ name, initialValue = '' }: RichTextProps, ref) => {
   const { quillRef, quill } = useQuill({
-    placeholder,
+    placeholder: "Содржина",
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Expose the Quill instance to the parent component via ref
+  useImperativeHandle(ref, () => ({
+    getQuill: () => quill,
+  }), [quill]);
 
   useEffect(() => {
     if (quill) {
@@ -35,4 +36,6 @@ export default function RichText({ name, initialValue = '' }: RichTextProps) {
       <input type="hidden" name={name} ref={inputRef} />
     </div>
   );
-}
+});
+
+export default RichText;
