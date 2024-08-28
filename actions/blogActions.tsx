@@ -4,7 +4,7 @@ import { db } from "../database/database";
 import { blogs } from "../database/schemas";
 import { eq, desc } from "drizzle-orm";
 
-export const addBlog = async (slugURL: string, title: string, content: string, sanitizedText: string, currentSlug: string): Promise<{ status: number; message: string }> => {
+export const addBlog = async (slugURL: string, title: string, sanitizedText: string, thumbnail: string, content: string, currentSlug: string): Promise<{ status: number; message: string }> => {
     try {
         const existingBlog = await db.select().from(blogs).where(eq(blogs.slugURL, currentSlug)).limit(1);
 
@@ -12,9 +12,10 @@ export const addBlog = async (slugURL: string, title: string, content: string, s
             const updateData = {
                 slugURL,
                 title,
-                content,
-                sanitizedText,
                 updatedAt: new Date(),
+                sanitizedText,
+                thumbnail,
+                content,
             };
             await db
                 .update(blogs)
@@ -25,8 +26,9 @@ export const addBlog = async (slugURL: string, title: string, content: string, s
             const newBlog = {
                 slugURL,
                 title,
-                content,
                 sanitizedText,
+                thumbnail,
+                content,
             };
             await db.insert(blogs).values(newBlog);
             return { status: 200, message: 'Blog created successfully!' };
@@ -39,10 +41,11 @@ export const addBlog = async (slugURL: string, title: string, content: string, s
 interface Blog {
     slugURL: string;
     title: string;
-    content: string;
-    sanitizedText: string;
     createdAt: Date;
     updatedAt: Date;
+    sanitizedText: string;
+    thumbnail: string;
+    content: string;
 }
 
 export const selectBlog = async (slugURL: string): Promise<{ blog: Blog | null, error: string | null }> => {

@@ -6,12 +6,12 @@ import Image from "next/image";
 type BlogCardProps = {
   title: string;
   text: string;
-  imageUrl: string;
   date: string;
+  thumbnail: string;
   slugURL: string;
 };
 
-const BlogCard: React.FC<BlogCardProps> = ({ title, text, imageUrl, date, slugURL }) => {
+const BlogCard: React.FC<BlogCardProps> = ({ title, text, date, thumbnail, slugURL }) => {
   return (
     <div
       onClick={() => (window.location.href = `/blogs/${slugURL}`)}
@@ -19,7 +19,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ title, text, imageUrl, date, slugUR
     >
       <div className="relative w-full pb-[60%] rounded-2xl overflow-hidden">
         <Image
-          src={imageUrl}
+          src={thumbnail}
           alt={title}
           fill
           className="absolute inset-0 w-full h-full object-cover"
@@ -28,7 +28,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ title, text, imageUrl, date, slugUR
       <div className="px-4 py-3 md:px-6 md:py-4">
         <div className="text-gray-600 text-xs md:text-sm pb-2">{date}</div>
         <div className="pb-1 font-bold text-lg md:text-xl truncate">{title}</div>
-        <div className="text-gray-700 text-sm line-clamp-3">{text}</div>
+        <div className="text-gray-700 line-clamp-3 h-[4.5rem]">{text}</div>
       </div>
     </div>
   );

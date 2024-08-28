@@ -15,6 +15,7 @@ export default async function BlogWriterPage({ params }: { params: { slugURL: st
             <h1 className="font-bold text-5xl p-4">Блог</h1>
             <BlogWriter
                 initialTitle={contentData.blog.title}
+                initialThumbnail={contentData.blog.thumbnail}
                 initialContent={contentData.blog.content}
             />
         </div>
