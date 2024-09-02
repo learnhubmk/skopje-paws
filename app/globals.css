@@ -5,3 +5,18 @@
 .grecaptcha-badge {
   visibility: hidden;
 }
+
+.ql-snow {
+  border: 0 !important;
+}
+
+.ql-toolbar {
+  border-bottom: 1px solid black !important;
+}
+
+.article-reset * {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: black !important;
+  background-color: white !important;
+}

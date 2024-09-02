@@ -1,8 +1,8 @@
-import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { Montserrat_Alternates } from "next/font/google";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import React, { Suspense } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "@/Footer";
 
@@ -28,13 +28,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html className={`${montserratAlternates.variable} ${montserrat.variable}`} lang="en">
-            <body className="font-montserrat-alternates h-full w-full bg-white text-black">
+        <html lang="en">
+            <body
+                className={`${montserrat.className} flex flex-col justify-between items-center h-full w-full bg-white text-white`}>
                 <Navigation />
                 <main>
-                    <Suspense>
-                        {children}
-                    </Suspense>
+                    <Suspense>{children}</Suspense>
                 </main>
                 <Footer />
             </body>
