@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "name": "Арија",
+        "imageUrl": "/images/slide-1.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Реа",
+        "imageUrl": "/images/slide-2.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Фреја",
+        "imageUrl": "/images/slide-3.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Јоги",
+        "imageUrl": "/images/slide-4.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Дона",
+        "imageUrl": "/images/slide-5.jpg"
+    }
+]
