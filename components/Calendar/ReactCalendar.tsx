@@ -68,7 +68,7 @@ const ReactCalendar = () => {
 
             const isAvailable = !reservations.some(reservation => {
                 const reservationStart = setHours(setMinutes(date.justDate, parseInt(reservation.time.split(":")[1], 10)), parseInt(reservation.time.split(":")[0], 10));
-                const reservationEnd = add(reservationStart, { minutes: reservation.duration });
+                const reservationEnd = add(add(reservationStart, { minutes: reservation.duration }), { minutes: BREAK_TIME });
 
                 return (
                     (isEqual(current, reservationStart) || isAfter(current, reservationStart)) &&
@@ -80,33 +80,23 @@ const ReactCalendar = () => {
                     );
             });
 
-            if (isAvailable) {
-                if (isBefore(current, continueTime)) {
-                    firstHalfTimes.push({ start: current, end: nextInterval });
-                } else {
-                    secondHalfTimes.push({ start: current, end: nextInterval });
-                }
-                current = add(current, { minutes: 30 });
+            const conflictingReservation = !reservations.find(reservation => {
+                const reservationStart = setHours(setMinutes(date.justDate, parseInt(reservation.time.split(":")[1], 10)), parseInt(reservation.time.split(":")[0], 10));
+                const reservationEnd = add(reservationStart, { minutes: reservation.duration });
+
+                return (
+                    isAfter(reservationEnd, current) ||
+                    isEqual(reservationStart, nextInterval) ||
+                    (isBefore(current, reservationStart) && isAfter(nextInterval, reservationStart))
+                );
+            });
+
+            if (isBefore(current, continueTime)) {
+                firstHalfTimes.push({ start: current, end: nextInterval, available: isAvailable && conflictingReservation });
             } else {
-                const conflictingReservation = reservations.find(reservation => {
-                    const reservationStart = setHours(setMinutes(date.justDate, parseInt(reservation.time.split(":")[1], 10)), parseInt(reservation.time.split(":")[0], 10));
-                    const reservationEnd = add(reservationStart, { minutes: reservation.duration });
-
-                    return (
-                        isAfter(reservationEnd, current) ||
-                        isEqual(reservationStart, nextInterval) ||
-                        (isBefore(current, reservationStart) && isAfter(nextInterval, reservationStart))
-                    );
-                });
-
-                if (conflictingReservation) {
-                    const reservationStart = setHours(setMinutes(date.justDate, parseInt(conflictingReservation.time.split(":")[1], 10)), parseInt(conflictingReservation.time.split(":")[0], 10));
-                    const reservationEnd = add(reservationStart, { minutes: conflictingReservation.duration });
-                    current = add(reservationEnd, { minutes: BREAK_TIME });
-                } else {
-                    current = add(current, { minutes: customInterval });
-                }
+                secondHalfTimes.push({ start: current, end: nextInterval, available: isAvailable && conflictingReservation });
             }
+            current = add(current, { minutes: BREAK_TIME });
         }
 
         return { firstHalfTimes, secondHalfTimes };
@@ -176,11 +166,16 @@ const ReactCalendar = () => {
 
     const renderFristHalfSlots = () => (
         <div className="flex flex-col gap-1">
-            {firstHalfTimes.map(({ start, end }, index) => (
+            {firstHalfTimes.map(({ start, end, available }, index) => (
                 <button
                     key={index}
-                    onClick={() => handleButtonClick(start)}
-                    className="h-10 rounded-3xl border-orange border-[1px] hover:bg-orange"
+                    onClick={() => available && handleButtonClick(start)}
+                    disabled={!available}
+                    className={`h-10 rounded-3xl border-[1px] transition-all duration-200
+                            ${available
+                            ? 'border-orange text-orange hover:bg-orange hover:text-white'
+                            : 'border-black/30 text-black/30 bg-gray-300/30 cursor-not-allowed'}
+                            `}
                 >
                     {formatTz(start, "HH:mm", { timeZone: TIME_ZONE })} - {formatTz(end, "HH:mm", { timeZone: TIME_ZONE })}
                 </button>
@@ -190,11 +185,16 @@ const ReactCalendar = () => {
 
     const renderSecondHalfSlots = () => (
         <div className="flex flex-col gap-1">
-            {secondHalfTimes.map(({ start, end }, index) => (
+            {secondHalfTimes.map(({ start, end, available }, index) => (
                 <button
                     key={index}
-                    onClick={() => handleButtonClick(start)}
-                    className="h-10 rounded-3xl border-orange border-[1px] hover:bg-orange"
+                    onClick={() => available && handleButtonClick(start)}
+                    disabled={!available}
+                    className={`h-10 rounded-3xl border-[1px] transition-all duration-200
+                            ${available
+                            ? 'border-orange text-orange hover:bg-orange hover:text-white'
+                            : 'border-black/30 text-black/30 bg-gray-300/30 cursor-not-allowed'}
+                            `}
                 >
                     {formatTz(start, "HH:mm", { timeZone: TIME_ZONE })} - {formatTz(end, "HH:mm", { timeZone: TIME_ZONE })}
                 </button>
