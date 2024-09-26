@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Calendar from "react-calendar";
-import { add, startOfDay, isAfter, isBefore, isEqual, setHours, setMinutes } from "date-fns";
+import { add, startOfTomorrow, startOfDay, isAfter, isBefore, isEqual, setHours, setMinutes } from "date-fns";
 import { toZonedTime, format as formatTz } from "date-fns-tz";
 import { BREAK_TIME, CLOSING_TIME, OPENING_TIME, PAUSE_TIME, CONTINUE_TIME } from "./config";
 import { Montserrat } from "next/font/google";
@@ -13,9 +13,9 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 const TIME_ZONE = "Europe/Skopje";
 
 const ReactCalendar = () => {
-    const today = startOfDay(toZonedTime(new Date(), TIME_ZONE));
+    const tomrorow = startOfTomorrow();
     const [date, setDate] = useState({
-        justDate: today,
+        justDate: tomrorow,
         dateTime: null,
     });
     const [times, setTimes] = useState({ firstHalfTimes: [], secondHalfTimes: [] });
@@ -217,7 +217,7 @@ const ReactCalendar = () => {
         <div className={`${montserrat.className} flex items-center justify-center font-sans py-8 px-2 text-charcoal`}>
             <div className="flex flex-col lg:flex-row items-center justify-center rounded-3xl relative w-full md:w-auto p-10 sm:p-0 gap-8">
                 <Calendar
-                    minDate={new Date()}
+                    minDate={startOfTomorrow()}
                     onClickDay={handleDateClick}
                     value={date.justDate}
                     view="month"
