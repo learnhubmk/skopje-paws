@@ -18,7 +18,7 @@ const ReactCalendar = () => {
         justDate: today,
         dateTime: null,
     });
-    const [times, setTimes] = useState([]);
+    const [times, setTimes] = useState({ firstHalfTimes: [], secondHalfTimes: [] });
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({
         dogBreed: "",
@@ -42,7 +42,7 @@ const ReactCalendar = () => {
     }, []);
 
     const getTimes = useCallback(async () => {
-        if (!date.justDate) return [];
+        if (!date.justDate) return { firstHalfTimes: [], secondHalfTimes: [] };
 
         const beginning = setMinutes(setHours(date.justDate, OPENING_TIME), 0);
         const end = setMinutes(setHours(date.justDate, CLOSING_TIME), 0);
@@ -52,7 +52,8 @@ const ReactCalendar = () => {
 
         const reservations = await fetchReservations(date.justDate);
 
-        const newTimes = [];
+        const firstHalfTimes = [];
+        const secondHalfTimes = [];
         let current = beginning;
 
         while (current < end) {
@@ -80,7 +81,11 @@ const ReactCalendar = () => {
             });
 
             if (isAvailable) {
-                newTimes.push({ start: current, end: nextInterval });
+                if (isBefore(current, continueTime)) {
+                    firstHalfTimes.push({ start: current, end: nextInterval });
+                } else {
+                    secondHalfTimes.push({ start: current, end: nextInterval });
+                }
                 current = add(current, { minutes: 30 });
             } else {
                 const conflictingReservation = reservations.find(reservation => {
@@ -104,12 +109,14 @@ const ReactCalendar = () => {
             }
         }
 
-        return newTimes;
+        return { firstHalfTimes, secondHalfTimes };
     }, [date.justDate, formData.walkDuration, fetchReservations]);
 
     useEffect(() => {
         getTimes().then(setTimes);
     }, [getTimes]);
+
+    const { firstHalfTimes, secondHalfTimes } = times;
 
     const handleDateClick = (selectedDate: Date) => {
         const justDate = startOfDay(toZonedTime(selectedDate, TIME_ZONE));
@@ -167,9 +174,23 @@ const ReactCalendar = () => {
         }
     };
 
-    const renderTimeSlots = () => (
+    const renderFristHalfSlots = () => (
         <div className="flex flex-col gap-1">
-            {times.map(({ start, end }, index) => (
+            {firstHalfTimes.map(({ start, end }, index) => (
+                <button
+                    key={index}
+                    onClick={() => handleButtonClick(start)}
+                    className="h-10 rounded-3xl border-orange border-[1px] hover:bg-orange"
+                >
+                    {formatTz(start, "HH:mm", { timeZone: TIME_ZONE })} - {formatTz(end, "HH:mm", { timeZone: TIME_ZONE })}
+                </button>
+            ))}
+        </div>
+    );
+
+    const renderSecondHalfSlots = () => (
+        <div className="flex flex-col gap-1">
+            {secondHalfTimes.map(({ start, end }, index) => (
                 <button
                     key={index}
                     onClick={() => handleButtonClick(start)}
@@ -286,7 +307,13 @@ const ReactCalendar = () => {
                                         Назад кон информации
                                     </a>
                                 </div>
-                                {renderTimeSlots()}
+                                {renderFristHalfSlots()}
+                                <div className="flex items-center px-4">
+                                    <div className="flex-grow h-px bg-black" />
+                                    <span className="px-2">Пауза од 11 до 16</span>
+                                    <div className="flex-grow h-px bg-black" />
+                                </div>
+                                {renderSecondHalfSlots()}
                             </div>
                         )}
 
