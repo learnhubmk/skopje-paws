@@ -164,7 +164,7 @@ export default function ReservationComponent() {
         }
     };
 
-    const renderFristHalfSlots = () => (
+    const renderFirstHalfSlots = () => (
         <div className="flex flex-col gap-1">
             {firstHalfTimes.map(({ start, end, available }, index) => (
                 <button
@@ -307,7 +307,7 @@ export default function ReservationComponent() {
                                         Назад кон информации
                                     </a>
                                 </div>
-                                {renderFristHalfSlots()}
+                                {renderFirstHalfSlots()}
                                 <div className="flex items-center px-4">
                                     <div className="flex-grow h-px bg-black" />
                                     <span className="px-2">Пауза од 11 до 16</span>
@@ -447,7 +447,7 @@ export default function ReservationComponent() {
                                     className={`w-full bg-orange h-10 rounded-lg ${(!formData.name || !validateEmail(formData.email) || !validatePhoneNumber(formData.phoneNumber)) ? "opacity-50 cursor-not-allowed" : ""}`}
                                     disabled={!formData.name || !validateEmail(formData.email) || !validatePhoneNumber(formData.phoneNumber)}
                                 >
-                                    Закжи термин
+                                    Закажи термин
                                 </button>
                             </div>
                         )}
