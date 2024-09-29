@@ -416,7 +416,10 @@ export default function ReservationComponent() {
                                         />
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <div className="text-left">Email</div>
+                                        <div className="flex items-center gap-2">
+                                            <div className="text-left">Email</div>
+                                            <div className={`text-red-500 text-sm ${(!validateEmail(formData.email) && formData.email !== "") ? "block" : "hidden"}`}>Невалиден Email</div>
+                                        </div>
                                         <input
                                             id="email"
                                             name="email"
@@ -429,7 +432,10 @@ export default function ReservationComponent() {
                                         />
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <div className="text-left">Телефон</div>
+                                        <div className="flex items-center gap-2">
+                                            <div className="text-left">Телефон</div>
+                                            <div className={`text-red-500 text-sm ${(!validatePhoneNumber(formData.phoneNumber) && formData.phoneNumber !== "") ? "block" : "hidden"}`}>Невалиден Телефон</div>
+                                        </div>
                                         <input
                                             id="phoneNumber"
                                             name="phoneNumber"
