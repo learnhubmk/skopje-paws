@@ -208,9 +208,13 @@ export default function ReservationComponent() {
     }
 
     function validatePhoneNumber(phoneNumber: string): boolean {
-        const phoneRegex = /^(\+?\(?\d{1,4}\)?[\d\s\-]*)$/;
-        const digitCount = phoneNumber.replace(/\D/g, "").length;
-        return phoneRegex.test(phoneNumber) && digitCount >= 9;
+        // Remove all spaces before validation
+        const sanitizedPhoneNumber = phoneNumber.replace(/\s/g, "");
+
+        // Regex to match numbers in the format 07X or +3897X/3897X followed by 6 digits
+        const phoneRegex = /^(07\d{1}|\+?3897\d{1})\d{6}$/;
+
+        return phoneRegex.test(sanitizedPhoneNumber);
     }
 
     return (
