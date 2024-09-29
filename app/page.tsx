@@ -4,14 +4,14 @@ import Carousel from "@/Carousel/Carousel";
 import Services from "@/Services";
 import Form from "@/Form";
 import Blogs from "./blogs/page";
-import ReactCalendar from "@/Calendar/ReactCalendar";
+import ReservationComponent from "@/Calendar/ReservationComponent";
 
 export default function Home() {
 
     return (
         <div>
             <Hero />
-            <ReactCalendar />
+            <ReservationComponent />
             <Steps />
             <Carousel />
             <Services />

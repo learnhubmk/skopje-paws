@@ -12,7 +12,7 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 
 const TIME_ZONE = "Europe/Skopje";
 
-const ReactCalendar = () => {
+export default function ReservationComponent() {
     const tomrorow = startOfTomorrow();
     const [date, setDate] = useState({
         justDate: tomrorow,
@@ -457,5 +457,3 @@ const ReactCalendar = () => {
         </div>
     );
 };
-
-export default ReactCalendar;
