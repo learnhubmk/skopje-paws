@@ -1,0 +1,20 @@
+
+{
+  "faq": [
+    {
+      "id": 1,
+      "question" : "Како да закажам прошетка?",
+      "answer" : "Lorem ipsum dolor sit amet consectetur. Vitae at mauris ultrices convallis metus odio quam egestas. Neque magna elit ut in id. Rhoncus posuere sed tellus habitasse velit erat."
+    },
+    {
+      "id": 2,
+      "question" : "Како оди процесот на запознавање?",
+      "answer" : "Lorem ipsum dolor sit amet consectetur. Vitae at mauris ultrices convallis metus odio quam egestas. Neque magna elit ut in id. Rhoncus posuere sed tellus habitasse velit erat."
+    },
+    {
+      "id": 3,
+      "question" : "Од што зависи цената на прошетката?",
+      "answer" : "Lorem ipsum dolor sit amet consectetur. Vitae at mauris ultrices convallis metus odio quam egestas. Neque magna elit ut in id. Rhoncus posuere sed tellus habitasse velit erat."
+    }
+  ]
+}
