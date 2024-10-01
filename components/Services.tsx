@@ -8,11 +8,11 @@ export default function Services() {
             <p className="text-charcoal text-4xl sm:text-5xl font-bold text-center">Наши услуги</p>
             <div className="flex flex-col xl:flex-row justify-center items-center gap-8">
 
-                <div className="relative w-full h-auto min-w-80 sm:w-112 sm:h-80 md:w-124 md:h-84 border-4 rounded-3xl border-orange">
+                <div className="relative w-full h-auto min-w-60 sm:w-112 sm:h-80 md:w-124 md:h-84 border-4 rounded-3xl border-orange">
                     <Image src={dogWalking} alt="A person walking a dog" className="w-full h-auto sm:w-auto sm:h-full rounded-2.5xl" />
                     <div className="absolute inset-0 bg-gradient-to-b from-jetBlack/50 to-graphite/0 rounded-2.5xl"></div>
-                    <div className="absolute inset-0 flex flex-col items-center pt-8 gap-4">
-                        <p className="font-bold text-3xl sm:text-5xl text-center p-2">Прошетки на кучиња</p>
+                    <div className="absolute inset-0 flex flex-col items-center pt-4 sm:pt-8 gap-2 sm:gap-4">
+                        <p className="font-semibold sm:font-bold text-2xl sm:text-5xl text-center py-2 px-6 sm:px-2">Прошетки на кучиња</p>
                         <a href="#steps" className="text-lg px-4 py-2 bg-orange text-charcoal rounded-xl">Закажи термин</a>
                     </div>
                 </div>
