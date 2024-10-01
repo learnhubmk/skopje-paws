@@ -38,6 +38,7 @@ const config: Config = {
       height: {
         "84": "21rem",
         CarouselCardHeight: "37.5rem",
+        calendarHeight: "469px",
       },
     },
   },
