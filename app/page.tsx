@@ -5,12 +5,14 @@ import Services from "@/Services";
 import FAQ from "@/FAQ/FAQ";
 import Form from "@/Form";
 import Blogs from "./blogs/page";
+import ReservationComponent from "@/Calendar/ReservationComponent";
 
 export default function Home() {
 
     return (
         <div>
             <Hero />
+            <ReservationComponent />
             <Steps />
             <Carousel />
             <Services />

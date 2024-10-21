@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat_Alternates } from "next/font/google";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import '../components/Calendar/Calendar.css';
 import React, { Suspense } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "@/Footer";
