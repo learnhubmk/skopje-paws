@@ -1,10 +1,12 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getReservationsFromYesterday } from "../../actions/reservationActions";
 
-const Dashboard = () => {
+export default function Dashboard() {
     const [isLoading, setIsLoading] = useState(true);
+    const [reservations, setReservations] = useState([]);
     const router = useRouter();
 
     const logout = async () => {
@@ -20,20 +22,38 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        fetch('/api/auth/check')
-            .then(response => {
+        const checkAuth = async () => {
+            try {
+                const response = await fetch("/api/auth/check");
                 if (!response.ok) {
-                    router.push('/login');
+                    router.push("/login");
                 } else {
+                    await fetchReservations();
                     setIsLoading(false);
                 }
-            })
-            .catch(() => {
-                router.push('/login');
-            });
+            } catch {
+                router.push("/login");
+            }
+        };
+
+        checkAuth();
     }, [router]);
 
-    if (isLoading) return <div className="py-12 text-center text-charcoal">Loading...</div>
+    const fetchReservations = async () => {
+        try {
+            const { reservations, error } = await getReservationsFromYesterday();
+
+            if (error) {
+                throw new Error(error);
+            }
+
+            setReservations(reservations);
+        } catch (error) {
+            console.error("Error fetching reservations:", error);
+        }
+    };
+
+    if (isLoading) return <div className="py-12 text-center text-charcoal">Loading...</div>;
 
     return (
         <div className="flex flex-col w-screen justify-center items-center py-12 px-4 lg:px-12 gap-4">
@@ -61,77 +81,31 @@ const Dashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className="border-b hover:bg-gray-200">
-                                <td className="px-2 py-1 border">2024-10-26</td>
-                                <td className="px-2 py-1 border">10:00</td>
-                                <td className="px-2 py-1 border">30 Минути</td>
-                                <td className="px-2 py-1 border">Андреј Петров</td>
-                                <td className="px-2 py-1 border">andrej@example.com</td>
-                                <td className="px-2 py-1 border">070 123 456</td>
-                                <td className="px-2 py-1 border">Скопје</td>
-                                <td className="px-2 py-1 border">Центар</td>
-                                <td className="px-2 py-1 border">Авенија на Човековите Права и Слободите 25-А</td>
-                                <td className="px-2 py-1 border">Златен ретривер</td>
-                                <td className="px-2 py-1 border">Социјализација</td>
-                            </tr>
-                            <tr className="bg-white border-b hover:bg-gray-200">
-                                <td className="px-2 py-1 border">2024-10-27</td>
-                                <td className="px-2 py-1 border">15:30</td>
-                                <td className="px-2 py-1 border">30 Минути</td>
-                                <td className="px-2 py-1 border">Марија Николовска</td>
-                                <td className="px-2 py-1 border">marija@example.com</td>
-                                <td className="px-2 py-1 border">071 234 567</td>
-                                <td className="px-2 py-1 border">Скопје</td>
-                                <td className="px-2 py-1 border">Центар</td>
-                                <td className="px-2 py-1 border">Булевар на Восстание и Единство 47</td>
-                                <td className="px-2 py-1 border">Француски булдог</td>
-                                <td className="px-2 py-1 border">Спорт</td>
-                            </tr>
-                            <tr className="border-b hover:bg-gray-200">
-                                <td className="px-2 py-1 border">2024-10-28</td>
-                                <td className="px-2 py-1 border">18:00</td>
-                                <td className="px-2 py-1 border">60 Минути</td>
-                                <td className="px-2 py-1 border">Благој Јовановски</td>
-                                <td className="px-2 py-1 border">blagoj@example.com</td>
-                                <td className="px-2 py-1 border">078 345 678</td>
-                                <td className="px-2 py-1 border">Скопје</td>
-                                <td className="px-2 py-1 border">Карпош</td>
-                                <td className="px-2 py-1 border">Улица на Младоста и Прогресивните Идеи 8,</td>
-                                <td className="px-2 py-1 border">Германски овчар</td>
-                                <td className="px-2 py-1 border">Социјализација</td>
-                            </tr>
-                            <tr className="bg-white border-b hover:bg-gray-200">
-                                <td className="px-2 py-1 border">2024-10-29</td>
-                                <td className="px-2 py-1 border">09:00</td>
-                                <td className="px-2 py-1 border">60 Минути</td>
-                                <td className="px-2 py-1 border">Елена Димитрова</td>
-                                <td className="px-2 py-1 border">elena@example.com</td>
-                                <td className="px-2 py-1 border">072 456 789</td>
-                                <td className="px-2 py-1 border">Скопје</td>
-                                <td className="px-2 py-1 border">Бутел</td>
-                                <td className="px-2 py-1 border">Булевар на Надежта и Единството 73</td>
-                                <td className="px-2 py-1 border">Пудлица</td>
-                                <td className="px-2 py-1 border">Релакс</td>
-                            </tr>
-                            <tr className="hover:bg-gray-200">
-                                <td className="px-2 py-1 border">2024-10-30</td>
-                                <td className="px-2 py-1 border">11:45</td>
-                                <td className="px-2 py-1 border">90 Минути</td>
-                                <td className="px-2 py-1 border">Стефан Ангелов</td>
-                                <td className="px-2 py-1 border">stefan@example.com</td>
-                                <td className="px-2 py-1 border">075 567 890</td>
-                                <td className="px-2 py-1 border">Скопје</td>
-                                <td className="px-2 py-1 border">Центар</td>
-                                <td className="px-2 py-1 border">Патека на Трајните Вредности и Пријателството 5-А, стан 5</td>
-                                <td className="px-2 py-1 border">Бигл</td>
-                                <td className="px-2 py-1 border">Спорт</td>
-                            </tr>
+                            {reservations.length > 0 ? (
+                                reservations.map((reservation, index) => (
+                                    <tr key={index} className="border-b hover:bg-gray-200">
+                                        <td className="px-2 py-1 border border-black">{reservation.date}</td>
+                                        <td className="px-2 py-1 border border-black">{reservation.time}</td>
+                                        <td className="px-2 py-1 border border-black">{reservation.walkDuration} Минути</td>
+                                        <td className="px-2 py-1 border border-black">{reservation.name}</td>
+                                        <td className="px-2 py-1 border border-black">{reservation.email}</td>
+                                        <td className="px-2 py-1 border border-black">{reservation.phoneNumber}</td>
+                                        <td className="px-2 py-1 border border-black">{reservation.city.charAt(0).toUpperCase() + reservation.city.slice(1)}</td>
+                                        <td className="px-2 py-1 border border-black">{reservation.municipality.charAt(0).toUpperCase() + reservation.municipality.slice(1)}</td>
+                                        <td className="px-2 py-1 border border-black">{reservation.address}</td>
+                                        <td className="px-2 py-1 border border-black">{reservation.dogBreed}</td>
+                                        <td className="px-2 py-1 border border-black">{reservation.walkType.charAt(0).toUpperCase() + reservation.walkType.slice(1)}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan={11} className="px-2 py-1 border text-black">Нема резервации од вчера натаму</td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     );
-};
-
-export default Dashboard;
+}
