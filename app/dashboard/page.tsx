@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getReservationsFromYesterday } from "../../actions/reservationActions";
+import CreateReservation from "@/CreateReservationModal";
 
 export default function Dashboard() {
     const [isLoading, setIsLoading] = useState(true);
     const [reservations, setReservations] = useState([]);
     const router = useRouter();
+    const [isShowing, setIsShowing] = useState(false);
 
     const logout = async () => {
         const response = await fetch("/api/auth/logout", {
@@ -56,15 +58,20 @@ export default function Dashboard() {
     if (isLoading) return <div className="py-12 text-center text-charcoal">Loading...</div>;
 
     return (
-        <div className="flex flex-col w-screen justify-center items-center py-12 px-4 lg:px-12 gap-4">
-            <div className="flex flex-col w-full items-end">
+        <div className="flex flex-col w-screen justify-center items-center py-12 px-4 lg:px-12 gap-4 text-charcoal">
+            <div className="flex flex-col-reverse sm:flex-row w-full justify-between gap-2">
+                <button onClick={() => setIsShowing(true)} className="text-xl px-3 py-1 border-2 border-black rounded-lg">
+                    + Додади термин
+                </button>
                 <button onClick={logout} className="text-xl px-3 py-1 bg-red-500 text-white rounded-lg">
                     Log Out
                 </button>
             </div>
-            <div className="flex flex-col w-full text-charcoal">
+            {isShowing && <CreateReservation setIsShowing={setIsShowing} />}
+
+            <div className="flex flex-col w-full">
                 <div className="overflow-x-auto">
-                    <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg text-charcoal text-center">
+                    <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg text-center">
                         <thead>
                             <tr className="text-black">
                                 <th className="px-4 py-2 border-2 border-black">Датум</th>
