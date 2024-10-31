@@ -65,8 +65,8 @@ export default function CreateReservation({ setIsShowing }) {
                         x
                     </button>
                 </div>
-                <form className="w-full overflow-y-auto  border-[1px] border-orange rounded-lg" onSubmit={submitForm}>
-                    <div className="flex flex-col gap-4 p-5">
+                <form className="w-full overflow-y-auto border-[1px] border-orange rounded-lg" onSubmit={submitForm}>
+                    <div className="flex flex-col gap-4 p-4">
                         <div className="flex flex-col gap-2">
                             <label htmlFor="reservationDate" className="text-left">Датум</label>
                             <input
