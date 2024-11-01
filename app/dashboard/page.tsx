@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getReservationsFromYesterday } from "../../actions/reservationActions";
-import CreateReservation from "@/CreateReservationModal";
+import CreateReservation from "@/Reservations/CreateReservationModal";
+import ReactTable from "@/Reservations/ReservationsTable";
 
 export default function Dashboard() {
     const [isLoading, setIsLoading] = useState(true);
@@ -69,50 +70,7 @@ export default function Dashboard() {
             </div>
             {isShowing && <CreateReservation setIsShowing={setIsShowing} />}
 
-            <div className="flex flex-col w-full">
-                <div className="overflow-x-auto">
-                    <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg text-center">
-                        <thead>
-                            <tr className="text-black">
-                                <th className="px-4 py-2 border-2 border-black">Датум</th>
-                                <th className="px-4 py-2 border-2 border-black">Време</th>
-                                <th className="px-4 py-2 border-2 border-black">Времетраење на прошетка</th>
-                                <th className="px-4 py-2 border-2 border-black">Име и презиме</th>
-                                <th className="px-4 py-2 border-2 border-black">Е-пошта</th>
-                                <th className="px-4 py-2 border-2 border-black">Телефонски број</th>
-                                <th className="px-4 py-2 border-2 border-black">Град</th>
-                                <th className="px-4 py-2 border-2 border-black">Општина</th>
-                                <th className="px-4 py-2 border-2 border-black">Адреса</th>
-                                <th className="px-4 py-2 border-2 border-black">Раса на куче</th>
-                                <th className="px-4 py-2 border-2 border-black">Тип на прошетка</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {reservations.length > 0 ? (
-                                reservations.map((reservation, index) => (
-                                    <tr key={index} className="border-b hover:bg-gray-200">
-                                        <td className="px-2 py-1 border border-black">{reservation.date}</td>
-                                        <td className="px-2 py-1 border border-black">{reservation.time}</td>
-                                        <td className="px-2 py-1 border border-black">{reservation.walkDuration} Минути</td>
-                                        <td className="px-2 py-1 border border-black">{reservation.name}</td>
-                                        <td className="px-2 py-1 border border-black">{reservation.email}</td>
-                                        <td className="px-2 py-1 border border-black">{reservation.phoneNumber}</td>
-                                        <td className="px-2 py-1 border border-black">{reservation.city.charAt(0).toUpperCase() + reservation.city.slice(1)}</td>
-                                        <td className="px-2 py-1 border border-black">{reservation.municipality.charAt(0).toUpperCase() + reservation.municipality.slice(1)}</td>
-                                        <td className="px-2 py-1 border border-black">{reservation.address}</td>
-                                        <td className="px-2 py-1 border border-black">{reservation.dogBreed}</td>
-                                        <td className="px-2 py-1 border border-black">{reservation.walkType.charAt(0).toUpperCase() + reservation.walkType.slice(1)}</td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan={11} className="px-2 py-1 border text-black">Нема резервации од вчера натаму</td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <ReactTable reservations={reservations} />
         </div>
     );
 }
