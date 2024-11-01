@@ -4,19 +4,31 @@ import { db } from "../database/database";
 import { reservations } from "../database/schemas";
 import { gte } from "drizzle-orm";
 
-export const retrieveReservations = async (fromDate: string): Promise<{ reservations: any[] | null; error: string | null }> => {
+export const retrieveReservations = async (fromDate?: string): Promise<{ reservations: any[] | null; error: string | null }> => {
     try {
-        const results = await db
-            .select()
-            .from(reservations)
-            .where(gte(reservations.date, fromDate))
-            .orderBy(reservations.date);
+        if (fromDate) {
+            const results = await db
+                .select()
+                .from(reservations)
+                .where(gte(reservations.date, fromDate))
+                .orderBy(reservations.date);
 
-        if (results.length === 0) {
-            return { reservations: null, error: "No Reservations Found" };
+            if (results.length === 0) {
+                return { reservations: null, error: "No Reservations Found" };
+            }
+            return { reservations: results, error: null };
+        } else {
+            const results = await db
+                .select()
+                .from(reservations)
+                .orderBy(reservations.date);
+
+            if (results.length === 0) {
+                return { reservations: null, error: "No Reservations Found" };
+            }
+            return { reservations: results, error: null };
         }
 
-        return { reservations: results, error: null };
     } catch (error) {
         console.error("Error fetching reservations:", error);
         return { reservations: null, error: "Failed to find reservations!" };

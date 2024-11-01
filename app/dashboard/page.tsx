@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getReservationsFromYesterday } from "../../actions/reservationActions";
+import { retrieveReservations, getReservationsFromYesterday } from "../../actions/reservationActions";
 import CreateReservation from "@/Reservations/CreateReservationModal";
 import ReactTable from "@/Reservations/ReservationsTable";
 
 export default function Dashboard() {
     const [isLoading, setIsLoading] = useState(true);
-    const [reservations, setReservations] = useState([]);
+    const [activeReservations, setActiveReservations] = useState([]);
+    const [allReservations, setAllReservations] = useState([]);
     const router = useRouter();
     const [isShowing, setIsShowing] = useState(false);
 
@@ -44,13 +45,15 @@ export default function Dashboard() {
 
     const fetchReservations = async () => {
         try {
-            const { reservations, error } = await getReservationsFromYesterday();
+            const { reservations: activeReservations, error: activeReservationsError } = await getReservationsFromYesterday();
+            const { reservations: allReservations, error: allReservationsError } = await retrieveReservations();
 
-            if (error) {
-                throw new Error(error);
+            if (activeReservationsError || allReservationsError) {
+                throw new Error(activeReservationsError || allReservationsError);
             }
 
-            setReservations(reservations);
+            setActiveReservations(activeReservations);
+            setAllReservations(allReservations);
         } catch (error) {
             console.error("Error fetching reservations:", error);
         }
@@ -70,7 +73,7 @@ export default function Dashboard() {
             </div>
             {isShowing && <CreateReservation setIsShowing={setIsShowing} />}
 
-            <ReactTable reservations={reservations} />
+            <ReactTable activeReservations={activeReservations} allReservations={allReservations} />
         </div>
     );
 }

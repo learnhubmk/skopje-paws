@@ -75,14 +75,24 @@ const columns = [
     }
 ];
 
-export default function ReactTable({ reservations }) {
+export default function ReactTable({ activeReservations, allReservations }) {
     const [data, setData] = useState([]);
+    const [loadAllData, setLoadAllData] = useState(false);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [globalFilter, setGlobalFilter] = useState("");
 
     useEffect(() => {
-        setData(reservations);
-    }, [reservations]);
+        setData(activeReservations);
+    }, [activeReservations]);
+
+    const handleLoadingData = () => {
+        setLoadAllData(!loadAllData);
+        if (!loadAllData) {
+            setData(allReservations);
+        } else {
+            setData(activeReservations);
+        }
+    };
 
     const table = useReactTable({
         data,
@@ -104,12 +114,23 @@ export default function ReactTable({ reservations }) {
     return (
         <div className="flex flex-col w-full">
             <div className="overflow-x-auto flex flex-col gap-2">
-                <DebouncedInput
-                    value={globalFilter ?? ""}
-                    onChange={(value) => setGlobalFilter(String(value))}
-                    className="flex w-full sm:w-64 p-2 font-lg shadow border border-black rounded"
-                    placeholder="Пребарувај"
-                />
+                <div className="flex gap-4">
+                    <DebouncedInput
+                        value={globalFilter ?? ""}
+                        onChange={(value) => setGlobalFilter(String(value))}
+                        className="flex w-full sm:w-64 p-2 font-lg shadow border border-black rounded"
+                        placeholder="Пребарувај"
+                    />
+                    <div className="flex gap-2 items-center justify-center">
+                        <label htmlFor="allReservations">Сите Резервации</label>
+                        <input
+                            id="allReservations"
+                            type="checkbox"
+                            checked={loadAllData}
+                            onChange={handleLoadingData}
+                        />
+                    </div>
+                </div>
                 <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg text-center">
                     <thead>
                         {table.getHeaderGroups().map(headerGroup => (
@@ -136,7 +157,7 @@ export default function ReactTable({ reservations }) {
                         ) : (
                             <tr>
                                 <td colSpan={11} className="px-2 py-1 border text-black">
-                                    Нема резервации од вчера натаму
+                                    {loadAllData ? "Нема резервации" : "Нема резервации од вчера натаму"}
                                 </td>
                             </tr>
                         )}
@@ -148,33 +169,33 @@ export default function ReactTable({ reservations }) {
                         onClick={() => table.firstPage()}
                         disabled={!table.getCanPreviousPage()}
                     >
-                        {'<<'}
+                        {"<<"}
                     </button>
                     <button
                         className="border rounded p-1"
                         onClick={() => table.previousPage()}
                         disabled={!table.getCanPreviousPage()}
                     >
-                        {'<'}
+                        {"<"}
                     </button>
                     <button
                         className="border rounded p-1"
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                     >
-                        {'>'}
+                        {">"}
                     </button>
                     <button
                         className="border rounded p-1"
                         onClick={() => table.lastPage()}
                         disabled={!table.getCanNextPage()}
                     >
-                        {'>>'}
+                        {">>"}
                     </button>
                     <span className="flex items-center gap-1">
                         <div>Страна</div>
                         <strong>
-                            {table.getState().pagination.pageIndex + 1} од {' '}
+                            {table.getState().pagination.pageIndex + 1} од {" "}
                             {table.getPageCount().toLocaleString()}
                         </strong>
                     </span>
@@ -206,7 +227,7 @@ export default function ReactTable({ reservations }) {
                     </select>
                 </div>
                 <div>
-                    Прикажани {table.getRowModel().rows.length.toLocaleString()} од {' '}
+                    Прикажани {table.getRowModel().rows.length.toLocaleString()} од {" "}
                     {table.getRowCount().toLocaleString()} Резервации
                 </div>
             </div>
