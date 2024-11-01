@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addReservation } from "../actions/calendarActions";
+import { addReservation } from "../../actions/calendarActions";
 
 export default function CreateReservation({ setIsShowing }) {
     const [formData, setFormData] = useState({
