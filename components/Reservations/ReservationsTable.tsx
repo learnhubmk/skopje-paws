@@ -10,11 +10,21 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { rankItem } from "@tanstack/match-sorter-utils";
+import { deleteReservation } from "../../actions/reservationActions";
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value);
     addMeta({ itemRank });
     return itemRank.passed;
+};
+
+const handleDeleteReservation = async (id: number) => {
+    const isConfirmed = window.confirm("Дали сигурно сакате да ја избришете резервацијата?");
+
+    if (isConfirmed) {
+        await deleteReservation(id);
+        window.location.reload();
+    }
 };
 
 const columns = [
@@ -72,6 +82,18 @@ const columns = [
         accessorKey: "walkType",
         header: "Тип на прошетка",
         cell: (props) => <p>{props.getValue()}</p>
+    },
+    {
+        accessorKey: "id",
+        header: "Избриши",
+        cell: (props) => (
+            <button
+                onClick={() => handleDeleteReservation(props.getValue())}
+                className="font-semibold text-red-500"
+            >
+                X
+            </button>
+        )
     }
 ];
 
@@ -136,7 +158,7 @@ export default function ReactTable({ activeReservations, allReservations }) {
                         {table.getHeaderGroups().map(headerGroup => (
                             <tr key={headerGroup.id} className="text-black">
                                 {headerGroup.headers.map(header => (
-                                    <th key={header.id} className="px-4 py-2 border-2 border-black">
+                                    <th key={header.id} className="p-2 border-2 border-black">
                                         {flexRender(header.column.columnDef.header, header.getContext())}
                                     </th>
                                 ))}
@@ -156,7 +178,7 @@ export default function ReactTable({ activeReservations, allReservations }) {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={11} className="px-2 py-1 border text-black">
+                                <td colSpan={12} className="px-2 py-1 border text-black">
                                     {loadAllData ? "Нема резервации" : "Нема резервации од вчера натаму"}
                                 </td>
                             </tr>
