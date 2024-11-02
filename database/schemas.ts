@@ -5,6 +5,7 @@ import {
   date,
   time,
   integer,
+  serial,
 } from "drizzle-orm/pg-core";
 
 export const blogs = pgTable("blogs", {
@@ -18,6 +19,7 @@ export const blogs = pgTable("blogs", {
 });
 
 export const reservations = pgTable("reservations", {
+  id: serial("id").primaryKey(),
   date: date("date").notNull(),
   time: time("time").notNull(),
   walkDuration: integer("walkDuration").notNull(),
