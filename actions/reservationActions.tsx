@@ -2,7 +2,7 @@
 
 import { db } from "../database/database";
 import { reservations } from "../database/schemas";
-import { gte } from "drizzle-orm";
+import { eq, gte } from "drizzle-orm";
 
 export const retrieveReservations = async (fromDate?: string): Promise<{ reservations: any[] | null; error: string | null }> => {
     try {
@@ -32,6 +32,23 @@ export const retrieveReservations = async (fromDate?: string): Promise<{ reserva
     } catch (error) {
         console.error("Error fetching reservations:", error);
         return { reservations: null, error: "Failed to find reservations!" };
+    }
+};
+
+export const deleteReservation = async (id: number): Promise<{ success: boolean; error: string | null }> => {
+    try {
+        const result = await db
+            .delete(reservations)
+            .where(eq(reservations.id, id));
+
+        if (result.rowCount === 0) {
+            return { success: false, error: "Reservation not found" };
+        }
+
+        return { success: true, error: null };
+    } catch (error) {
+        console.error("Error deleting reservation:", error);
+        return { success: false, error: "Failed to delete reservation" };
     }
 };
 
