@@ -276,7 +276,7 @@ function DebouncedInput({
     useEffect(() => {
         const timeout = setTimeout(() => onChange(value), debounce);
         return () => clearTimeout(timeout);
-    }, [value, debounce]);
+    }, [value, debounce, onChange]);
 
     return <input {...props} value={value} onChange={(e) => setValue(e.target.value)} />;
 }
