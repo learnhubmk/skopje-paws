@@ -97,7 +97,7 @@ const columns = [
     }
 ];
 
-export default function ReactTable({ activeReservations, allReservations }) {
+export default function ReservationsTable({ activeReservations, allReservations }) {
     const [data, setData] = useState([]);
     const [loadAllData, setLoadAllData] = useState(false);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);

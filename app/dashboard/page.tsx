@@ -3,15 +3,15 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { retrieveReservations, getReservationsFromYesterday } from "../../actions/reservationActions";
-import CreateReservation from "@/Reservations/CreateReservationModal";
-import ReactTable from "@/Reservations/ReservationsTable";
+import ReservationModal from "@/Reservations/ReservationModal";
+import ReservationsTable from "@/Reservations/ReservationsTable";
 
 export default function Dashboard() {
     const [isLoading, setIsLoading] = useState(true);
     const [activeReservations, setActiveReservations] = useState([]);
     const [allReservations, setAllReservations] = useState([]);
     const router = useRouter();
-    const [showCreateReservation, setShowCreateReservation] = useState(false);
+    const [showReservationModal, setShowReservationModal] = useState(false);
 
     const logout = async () => {
         const response = await fetch("/api/auth/logout", {
@@ -64,16 +64,16 @@ export default function Dashboard() {
     return (
         <div className="flex flex-col w-screen justify-center items-center py-12 px-4 lg:px-12 gap-4 text-charcoal">
             <div className="flex flex-col-reverse sm:flex-row w-full justify-between gap-2">
-                <button onClick={() => setShowCreateReservation(true)} className="text-xl px-3 py-1 border-2 border-black rounded-lg">
+                <button onClick={() => setShowReservationModal(true)} className="text-xl px-3 py-1 border-2 border-black rounded-lg">
                     + Додади термин
                 </button>
                 <button onClick={logout} className="text-xl px-3 py-1 bg-red-500 text-white rounded-lg">
                     Log Out
                 </button>
             </div>
-            {showCreateReservation && <CreateReservation setShowCreateReservation={setShowCreateReservation} />}
+            {showReservationModal && <ReservationModal setShowReservationModal={setShowReservationModal} />}
 
-            <ReactTable activeReservations={activeReservations} allReservations={allReservations} />
+            <ReservationsTable activeReservations={activeReservations} allReservations={allReservations} />
         </div>
     );
 }
