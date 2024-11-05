@@ -4,7 +4,7 @@ import { db } from "../database/database";
 import { reservations } from "../database/schemas";
 import { eq, gte } from "drizzle-orm";
 
-export const retrieveReservations = async (fromDate?: string): Promise<{ reservations: any[] | null; error: string | null }> => {
+export const retrieveReservations = async (fromDate?: string): Promise<{ reservations: any | null; error: string | null }> => {
     try {
         if (fromDate) {
             const results = await db
@@ -52,7 +52,7 @@ export const deleteReservation = async (id: number): Promise<{ success: boolean;
     }
 };
 
-export const getReservationsFromYesterday = async (): Promise<{ reservations: any[] | null; error: string | null }> => {
+export const getReservationsFromYesterday = async (): Promise<{ reservations: any | null; error: string | null }> => {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     const formattedDate = yesterday.toISOString().split("T")[0];
