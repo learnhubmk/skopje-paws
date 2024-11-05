@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { addReservation } from "../../actions/calendarActions";
 
-export default function CreateReservation({ setIsShowing }) {
+export default function CreateReservation({ setShowCreateReservation }) {
     const [formData, setFormData] = useState({
         reservationTime: "",
         reservationDate: "",
@@ -59,7 +59,7 @@ export default function CreateReservation({ setIsShowing }) {
             <div className="p-4 h-2/3 border w-96 shadow-lg rounded-md bg-white text-charcoal flex flex-col gap-4">
                 <div className="flex justify-end">
                     <button
-                        onClick={() => setIsShowing(false)}
+                        onClick={() => setShowCreateReservation(false)}
                         className="px-2 text-base font-medium rounded-md border-[1px] border-black hover:bg-red-500 hover:border-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-300"
                     >
                         x
