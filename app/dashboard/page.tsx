@@ -26,21 +26,18 @@ export default function Dashboard() {
     };
 
     useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const response = await fetch("/api/auth/check");
+        fetch('/api/auth/check')
+            .then(async response => {
                 if (!response.ok) {
                     router.push("/login");
                 } else {
                     await fetchReservations();
                     setIsLoading(false);
                 }
-            } catch {
+            })
+            .catch(() => {
                 router.push("/login");
-            }
-        };
-
-        checkAuth();
+            });
     }, [router]);
 
     const fetchReservations = async () => {
