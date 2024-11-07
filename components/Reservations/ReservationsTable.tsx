@@ -19,20 +19,20 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
     return itemRank.passed;
 };
 
-const handleDeleteReservation = async (id: number) => {
-    const isConfirmed = window.confirm("Дали сигурно сакате да ја избришете резервацијата?");
-
-    if (isConfirmed) {
-        await deleteReservation(id);
-        window.location.reload();
-    }
-};
-
-export default function ReservationsTable({ activeReservations, allReservations }) {
+export default function ReservationsTable({ fetchReservations, activeReservations, allReservations }) {
     const [data, setData] = useState([]);
     const [loadAllData, setLoadAllData] = useState(false);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [globalFilter, setGlobalFilter] = useState("");
+
+    const handleDeleteReservation = async (id: number) => {
+        const isConfirmed = window.confirm("Дали сигурно сакате да ја избришете резервацијата?");
+
+        if (isConfirmed) {
+            await deleteReservation(id);
+            fetchReservations();
+        }
+    };
 
     useEffect(() => {
         setData(activeReservations);
