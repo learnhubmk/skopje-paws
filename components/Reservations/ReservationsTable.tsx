@@ -7,6 +7,7 @@ import {
     getFilteredRowModel,
     getPaginationRowModel,
     getSortedRowModel,
+    SortingState,
     useReactTable,
 } from "@tanstack/react-table";
 import { rankItem } from "@tanstack/match-sorter-utils";
@@ -27,76 +28,6 @@ const handleDeleteReservation = async (id: number) => {
     }
 };
 
-const columns = [
-    {
-        accessorKey: "date",
-        header: "Датум",
-        cell: (props) => <p>{props.getValue()}</p>
-    },
-    {
-        accessorKey: "time",
-        header: "Време",
-        cell: (props) => <p>{props.getValue()}</p>
-    },
-    {
-        accessorKey: "walkDuration",
-        header: "Времетраење на прошетка",
-        cell: (props) => <p>{props.getValue()}</p>
-    },
-    {
-        accessorKey: "name",
-        header: "Име и презиме",
-        cell: (props) => <p>{props.getValue()}</p>
-    },
-    {
-        accessorKey: "email",
-        header: "Е-пошта",
-        cell: (props) => <p>{props.getValue()}</p>
-    },
-    {
-        accessorKey: "phoneNumber",
-        header: "Телефонски број",
-        cell: (props) => <p>{props.getValue()}</p>
-    },
-    {
-        accessorKey: "city",
-        header: "Град",
-        cell: (props) => <p>{props.getValue()}</p>
-    },
-    {
-        accessorKey: "municipality",
-        header: "Општина",
-        cell: (props) => <p>{props.getValue()}</p>
-    },
-    {
-        accessorKey: "address",
-        header: "Адреса",
-        cell: (props) => <p>{props.getValue()}</p>
-    },
-    {
-        accessorKey: "dogBreed",
-        header: "Раса на куче",
-        cell: (props) => <p>{props.getValue()}</p>
-    },
-    {
-        accessorKey: "walkType",
-        header: "Тип на прошетка",
-        cell: (props) => <p>{props.getValue()}</p>
-    },
-    {
-        accessorKey: "id",
-        header: "Избриши",
-        cell: (props) => (
-            <button
-                onClick={() => handleDeleteReservation(props.getValue())}
-                className="font-semibold text-red-500"
-            >
-                X
-            </button>
-        )
-    }
-];
-
 export default function ReservationsTable({ activeReservations, allReservations }) {
     const [data, setData] = useState([]);
     const [loadAllData, setLoadAllData] = useState(false);
@@ -116,13 +47,88 @@ export default function ReservationsTable({ activeReservations, allReservations 
         }
     };
 
+    const [sorting, setSorting] = useState<SortingState>([])
+
+    const columns = [
+        {
+            accessorKey: "date",
+            header: "Датум",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: "time",
+            header: "Време",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: "walkDuration",
+            header: "Времетраење на прошетка",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: "name",
+            header: "Име и презиме",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: "email",
+            header: "Е-пошта",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: "phoneNumber",
+            header: "Телефонски број",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: "city",
+            header: "Град",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: "municipality",
+            header: "Општина",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: "address",
+            header: "Адреса",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: "dogBreed",
+            header: "Раса на куче",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: "walkType",
+            header: "Тип на прошетка",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: "id",
+            header: "Избриши",
+            enableSorting: false,
+            cell: (props) => (
+                <button
+                    onClick={() => handleDeleteReservation(props.getValue())}
+                    className="font-semibold text-red-500"
+                >
+                    X
+                </button>
+            )
+        }
+    ];
+
     const table = useReactTable({
         data,
         columns,
         filterFns: { fuzzy: fuzzyFilter },
-        state: { columnFilters, globalFilter },
+        state: { columnFilters, globalFilter, sorting },
         onColumnFiltersChange: setColumnFilters,
         onGlobalFilterChange: setGlobalFilter,
+        onSortingChange: setSorting,
+        sortDescFirst: false,
         globalFilterFn: fuzzyFilter,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
@@ -157,11 +163,42 @@ export default function ReservationsTable({ activeReservations, allReservations 
                     <thead>
                         {table.getHeaderGroups().map(headerGroup => (
                             <tr key={headerGroup.id} className="text-black">
-                                {headerGroup.headers.map(header => (
-                                    <th key={header.id} className="p-2 border-2 border-black">
-                                        {flexRender(header.column.columnDef.header, header.getContext())}
-                                    </th>
-                                ))}
+                                {headerGroup.headers.map((header, index) => {
+                                    const deleteHeader = index === headerGroup.headers.length - 1;
+                                    return (
+                                        <th
+                                            key={header.id}
+                                            className={`p-2 border-2 border-black ${header.column.getCanSort() && !deleteHeader
+                                                ? 'cursor-pointer select-none hover:bg-gray-100'
+                                                : ''}`}
+                                            onClick={header.column.getToggleSortingHandler()}
+                                        >
+                                            {header.isPlaceholder ? null : (
+                                                <div className="flex items-center justify-center gap-1 w-full">
+                                                    <span>{flexRender(header.column.columnDef.header, header.getContext())}</span>
+                                                    {!deleteHeader && (
+                                                        <div className="flex flex-col items-center">
+                                                            <span
+                                                                className={`${header.column.getIsSorted() === 'asc'
+                                                                    ? 'text-black opacity-100'
+                                                                    : 'text-gray-500 opacity-20'}`}
+                                                            >
+                                                                ▲
+                                                            </span>
+                                                            <span
+                                                                className={`${header.column.getIsSorted() === 'desc'
+                                                                    ? 'text-black opacity-100'
+                                                                    : 'text-gray-500 opacity-20'}`}
+                                                            >
+                                                                ▼
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </th>
+                                    );
+                                })}
                             </tr>
                         ))}
                     </thead>
