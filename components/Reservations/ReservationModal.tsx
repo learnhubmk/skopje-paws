@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { addReservation } from "../../actions/calendarActions";
 
-export default function ReservationModal({ setShowReservationModal }) {
+export default function ReservationModal({ fetchReservations, setShowReservationModal }) {
     const [formData, setFormData] = useState({
         reservationTime: "",
         reservationDate: "",
@@ -44,8 +44,8 @@ export default function ReservationModal({ setShowReservationModal }) {
             );
 
             if (result.status === 200) {
-                alert(result.message);
-                window.location.reload();
+                setShowReservationModal(false);
+                fetchReservations();
             } else {
                 alert(result.message);
             }

@@ -68,9 +68,9 @@ export default function Dashboard() {
                     Log Out
                 </button>
             </div>
-            {showReservationModal && <ReservationModal setShowReservationModal={setShowReservationModal} />}
+            {showReservationModal && <ReservationModal fetchReservations={fetchReservations} setShowReservationModal={setShowReservationModal} />}
 
-            <ReservationsTable activeReservations={activeReservations} allReservations={allReservations} />
+            <ReservationsTable fetchReservations={fetchReservations} activeReservations={activeReservations} allReservations={allReservations} />
         </div>
     );
 }
