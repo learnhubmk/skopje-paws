@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-    const [isLoading, setIsLoading] = useState(true);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -31,16 +30,12 @@ export default function LoginPage() {
             .then(response => {
                 if (response.ok) {
                     router.push("/dashboard");
-                } else {
-                    setIsLoading(false);
                 }
             })
             .catch(() => {
                 router.push("/");
             });
     }, [router]);
-
-    if (isLoading) return <div className="py-12 text-center text-charcoal">Loading...</div>
 
     return (
         <div className="pt-12 w-screen flex flex-col justify-center items-center">
