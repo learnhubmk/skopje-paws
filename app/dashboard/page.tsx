@@ -14,19 +14,23 @@ export default function Dashboard() {
     const [showReservationModal, setShowReservationModal] = useState(false);
 
     const logout = async () => {
-        const response = await fetch("/api/auth/logout", {
+        fetch("/api/auth/logout", {
             method: "POST",
-        });
-
-        if (response.ok) {
-            router.push("/");
-        } else {
-            console.error("Something went wrong during logout");
-        }
+        })
+            .then((response) => {
+                if (response.ok) {
+                    router.push("/");
+                } else {
+                    console.error("Failed to log out");
+                }
+            })
+            .catch(() => {
+                console.error("Something went wrong during logout");
+            });
     };
 
     useEffect(() => {
-        fetch('/api/auth/check')
+        fetch("/api/auth/check")
             .then(async response => {
                 if (!response.ok) {
                     router.push("/login");
