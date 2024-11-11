@@ -45,19 +45,15 @@ export default function Dashboard() {
     }, [router]);
 
     const fetchReservations = async () => {
-        try {
-            const { reservations: activeReservations, error: activeReservationsError } = await getReservationsFromYesterday();
-            const { reservations: allReservations, error: allReservationsError } = await retrieveReservations();
+        const { reservations: activeReservations, error: activeReservationsError } = await getReservationsFromYesterday();
+        const { reservations: allReservations, error: allReservationsError } = await retrieveReservations();
 
-            if (activeReservationsError || allReservationsError) {
-                throw new Error(activeReservationsError || allReservationsError);
-            }
-
-            setActiveReservations(activeReservations);
-            setAllReservations(allReservations);
-        } catch (error) {
-            console.error("Error fetching reservations:", error);
+        if (activeReservationsError || allReservationsError) {
+            throw new Error(activeReservationsError || allReservationsError);
         }
+
+        setActiveReservations(activeReservations);
+        setAllReservations(allReservations);
     };
 
     if (isLoading) return <div className="py-12 text-center text-charcoal">Loading...</div>;
