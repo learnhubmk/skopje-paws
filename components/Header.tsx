@@ -1,12 +1,14 @@
 import Image from "next/image";
-import LOGO from "../public/logo.png"
+import Logo from "../public/logo.svg"
 import LinkButton from "@/LinkButton";
 
 export default function Header() {
     return (
-        <nav className={`flex justify-between h-full w-full bg-white overflow-hidden mt-10 pl-24 pr-24`}>
-            <div className={`flex-initial w-full`}>
-                <Image src={LOGO} alt={`Skopje Paws Logo`} className={"flex items-start"} />
+        <nav className="flex justify-between items-center h-full w-full overflow-hidden py-8 px-16">
+            <div>
+                <div>
+                    <Image src={Logo} alt="Logo"></Image>
+                </div>
             </div>
             <div className={"flex items-center justify-between list-none w-full"}>
                 <li><LinkButton type={"link"} url={"/contact#steps"} text={"Чекори за закажување"} bgColor={"bg-white"} textColor={"text-black"} /></li>
