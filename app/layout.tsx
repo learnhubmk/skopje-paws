@@ -4,7 +4,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import '../components/Calendar/Calendar.css';
 import React, { Suspense } from "react";
-import Navigation from "../components/Navigation";
+import Header from "@/Header";
 import Footer from "@/Footer";
 
 
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <html lang="en">
             <body
                 className={`${montserrat.className} flex flex-col justify-between items-center h-full w-full bg-white text-white`}>
-                <Navigation />
+                <Header />
                 <main>
                     <Suspense>{children}</Suspense>
                 </main>
