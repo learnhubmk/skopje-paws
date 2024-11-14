@@ -7,7 +7,6 @@ import React, { Suspense } from "react";
 import Header from "@/Header";
 import Footer from "@/Footer";
 
-
 const montserrat = Montserrat({
     subsets: ['cyrillic'],
     variable: '--font-montserrat',
