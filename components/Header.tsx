@@ -13,7 +13,7 @@ export default function Header() {
                 <Link href={"/#services"}>Услуги</Link>
                 <Link href={"/#clients"}>Наши клиенти</Link>
                 <Link href={"/#contact"}>Контакт</Link>
-                <Link href={"/#hero"} className="bg-orange px-4 py-1 rounded">Закажи термин</Link>
+                <Link href={"/#reservation"} className="bg-orange px-4 py-1 rounded">Закажи термин</Link>
             </div>
         </nav>
     );

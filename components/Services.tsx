@@ -4,7 +4,7 @@ import dogSitting from "../public/Services Images/dogSitting.jpg"
 
 export default function Services() {
     return (
-        <div className="flex flex-col justify-center items-center w-full pt-12 pb-3 gap-8 px-4 lg:px-20">
+        <div id="services" className="flex flex-col justify-center items-center w-full pt-12 pb-3 gap-8 px-4 lg:px-20">
             <p className="text-charcoal text-4xl sm:text-5xl font-bold text-center">Наши услуги</p>
             <div className="flex flex-col xl:flex-row justify-center items-center gap-8">
 
