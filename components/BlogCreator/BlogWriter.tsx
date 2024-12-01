@@ -3,6 +3,7 @@
 import React, { FormEvent, useRef } from "react";
 import RichText from "./RichText/RichText";
 import { addBlog } from "../../actions/blogActions";
+import { usePathname, useRouter } from "next/navigation";
 
 const cyrillicToLatinMap: Record<string, string> = {
     'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Ѓ': 'Gj', 'Е': 'E', 'Ж': 'Zh',
@@ -27,6 +28,9 @@ interface BlogWriterProps {
 
 export default function BlogWriter({ initialTitle = '', initialThumbnail = '', initialContent = '' }: BlogWriterProps) {
     const quillRef = useRef<{ getQuill: () => any } | null>(null);
+    const router = useRouter();
+    const pathname = usePathname();
+
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
@@ -63,11 +67,11 @@ export default function BlogWriter({ initialTitle = '', initialThumbnail = '', i
                 : initialThumbnail;
 
             try {
-                const currentSlug = window.location.pathname.split('/').filter(Boolean).pop();
+                const currentSlug = pathname.split('/').filter(Boolean).pop();
                 const response = await addBlog(slugURL, title, sanitizedText, thumbnail, content, currentSlug);
                 if (response.status === 200) {
                     alert(response.message);
-                    location.replace(`/blogs/${slugURL}`);
+                    router.push(`/blogs/${slugURL}`);
                 } else {
                     alert(`Error ${response.status}: ` + response.message);
                 }
