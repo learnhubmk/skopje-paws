@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 type BlogCardProps = {
   title: string;
@@ -12,9 +13,11 @@ type BlogCardProps = {
 };
 
 const BlogCard: React.FC<BlogCardProps> = ({ title, text, date, thumbnail, slugURL }) => {
+  const router = useRouter();
+
   return (
     <div
-      onClick={() => (window.location.href = `/blogs/${slugURL}`)}
+      onClick={() => (router.push(`/blogs/${slugURL}`))}
       className="flex flex-col justify-between w-full max-w-72 lg:max-w-sm rounded-2xl overflow-hidden shadow-lg hover:cursor-pointer text-black"
     >
       <div className="relative w-full pb-[60%] rounded-2xl overflow-hidden">

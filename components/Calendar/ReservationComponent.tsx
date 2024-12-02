@@ -173,8 +173,8 @@ export default function ReservationComponent() {
                     disabled={!available}
                     className={`h-10 rounded-3xl border-[1px] transition-all duration-200
                             ${available
-                            ? 'border-orange text-orange hover:bg-orange hover:text-white'
-                            : 'border-black/30 text-black/30 bg-gray-300/30 cursor-not-allowed'}
+                            ? "border-orange text-orange hover:bg-orange hover:text-white"
+                            : "border-black/30 text-black/30 bg-gray-300/30 cursor-not-allowed"}
                             `}
                 >
                     {formatTz(start, "HH:mm", { timeZone: TIME_ZONE })} - {formatTz(end, "HH:mm", { timeZone: TIME_ZONE })}
@@ -192,8 +192,8 @@ export default function ReservationComponent() {
                     disabled={!available}
                     className={`h-10 rounded-3xl border-[1px] transition-all duration-200
                             ${available
-                            ? 'border-orange text-orange hover:bg-orange hover:text-white'
-                            : 'border-black/30 text-black/30 bg-gray-300/30 cursor-not-allowed'}
+                            ? "border-orange text-orange hover:bg-orange hover:text-white"
+                            : "border-black/30 text-black/30 bg-gray-300/30 cursor-not-allowed"}
                             `}
                 >
                     {formatTz(start, "HH:mm", { timeZone: TIME_ZONE })} - {formatTz(end, "HH:mm", { timeZone: TIME_ZONE })}
@@ -218,8 +218,8 @@ export default function ReservationComponent() {
     }
 
     return (
-        <div className={`${montserrat.className} flex items-center justify-center font-sans py-8 px-2 text-charcoal`}>
-            <div className="flex flex-col lg:flex-row items-center justify-center rounded-3xl relative w-full p-10 sm:p-0 gap-8">
+        <div id="reservation" className={`${montserrat.className} flex items-center justify-center font-sans py-8 px-2 text-charcoal`}>
+            <div className="flex flex-col lg:flex-row items-center justify-center rounded-3xl relative w-full p-0 gap-8">
                 <Calendar
                     minDate={startOfTomorrow()}
                     onClickDay={handleDateClick}

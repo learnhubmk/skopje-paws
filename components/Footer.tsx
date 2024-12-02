@@ -4,7 +4,7 @@ import pawsFootprint from "../public/paws.svg";
 
 const Footer = () => {
     return (
-        <footer className="w-full flex items-center justify-center pb-20 pt-12">
+        <footer id="contact" className="w-full flex items-center justify-center pb-20 pt-12">
             <div className="flex flex-col relative border-2 items-center justify-center rounded-3xl border-orange w-5/6 max-w-screen-xl p-4">
                 <Image src={footerLogo} alt="Logo Image" className="mx-auto w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-4" />
                 <div className="flex flex-col items-center">

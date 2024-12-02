@@ -1,5 +1,4 @@
-import StepsCard from './StepsCard'
-import Image from 'next/image';
+import StepsCard from "./StepsCard"
 import Paw from "/public/paw.svg";
 import PawTwo from "/public/paw2.svg";
 
@@ -7,10 +6,10 @@ import PawTwo from "/public/paw2.svg";
 
 const Steps = () => {
     return (
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-10 px-4 md:px-16 justify-items-center lg:justify-items-end'>
-            <div className='col-span-1'>
-                <h2 className='text-black font-bold text-3xl lg:text-4xl mb-5 lg:text-left text-center sm:text-center'>Чекори до успешни прошетки</h2>
-                <p className='text-black font-medium text-xl lg:text-xl lg:text-left text-center sm:text-center'>Прочитајте како да постигнете успешни прошетки за вашиот миленик. Ние занеме дека секој миленик си е свој на негов начин, сите се со различен карактер.
+        <div id="steps" className="grid grid-cols-1 lg:grid-cols-2 gap-10 px-4 md:px-16 justify-items-center lg:justify-items-end">
+            <div className="col-span-1">
+                <h2 className="text-black font-bold text-3xl lg:text-4xl mb-5 lg:text-left text-center sm:text-center">Чекори до успешни прошетки</h2>
+                <p className="text-black font-medium text-xl lg:text-xl lg:text-left text-center sm:text-center">Прочитајте како да постигнете успешни прошетки за вашиот миленик. Ние занеме дека секој миленик си е свој на негов начин, сите се со различен карактер.
                     Па затоа закажете термин за да дознаете каква радост го чека</p>
             </div>
             <div className=" grid md:grid grid-cols-1 sm:grid-cols-2 gap-10 sm:flex sm:flex-col">
