@@ -7,6 +7,9 @@ import { toZonedTime, format as formatTz } from "date-fns-tz";
 import { BREAK_TIME, CLOSING_TIME, OPENING_TIME, PAUSE_TIME, CONTINUE_TIME } from "./config";
 import { Montserrat } from "next/font/google";
 import { retrieveReservations, addReservation } from "../../actions/calendarActions";
+import Image from "next/image";
+import Paw from "/public/paw.svg";
+import PawTwo from "/public/paw2.svg";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -220,6 +223,7 @@ export default function ReservationComponent() {
     return (
         <div id="reservation" className={`${montserrat.className} flex items-center justify-center font-sans py-8 px-2 text-charcoal`}>
             <div className="flex flex-col lg:flex-row items-center justify-center rounded-3xl relative w-full p-0 gap-8">
+                <Image src={PawTwo} alt="Paws Footprint Left" className="hidden xl:block w-64 h-64 2xl:w-128 2xl:h-128 opacity-5 -rotate-90" />
                 <Calendar
                     minDate={startOfTomorrow()}
                     onClickDay={handleDateClick}
@@ -227,242 +231,246 @@ export default function ReservationComponent() {
                     view="month"
                     className="p-2"
                 />
-                <div className="flex flex-col w-full max-w-80 items-center rounded-3xl shadow-xl h-calendarHeight">
-                    <div className="bg-orange min-h-16 w-full rounded-t-3xl flex items-center justify-center text-black flex-col">
-                        {formatTz(date.justDate, "MMMM dd, EEEE", { timeZone: TIME_ZONE })}
-                        {date.dateTime && (
-                            <div className="text-black flex">
-                                {formatTz(date.dateTime, "HH:mm", { timeZone: TIME_ZONE })} - {formatTz(add(date.dateTime, { minutes: parseInt(formData.walkDuration) }), "HH:mm", { timeZone: TIME_ZONE })}
-                            </div>
-                        )}
-                    </div>
-                    <form className="h-full w-full overflow-y-auto" onSubmit={submitForm}>
-                        {currentStep === 0 && (
-                            <div className="flex flex-col justify-between h-full p-5 w-full">
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex flex-col gap-2">
-                                        <div className="text-left">Раса на куче</div>
-                                        <input
-                                            id="dogBreed"
-                                            name="dogBreed"
-                                            value={formData.dogBreed}
-                                            onChange={handleInputChange}
-                                            type="text"
-                                            placeholder="Доберман"
-                                            className="p-2 border-solid border-darkGray rounded-3xl border-[1px]"
-                                            required
-                                        />
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="text-left">Тип на прошетка</div>
-                                        <div className="custom-select">
-                                            <select
-                                                id="walkType"
-                                                name="walkType"
-                                                value={formData.walkType}
+                <div className="relative flex w-full justify-center items-center lg:w-auto">
+                    <Image src={Paw} alt="Paws Footprint Center" className="absolute z-0 m-auto inset-0 w-144 lg:hidden opacity-35" />
+                    <div className="flex flex-col w-full z-10 max-w-80 items-center rounded-3xl shadow-xl h-calendarHeight">
+                        <div className="bg-orange min-h-16 w-full rounded-t-3xl flex items-center justify-center text-black flex-col">
+                            {formatTz(date.justDate, "MMMM dd, EEEE", { timeZone: TIME_ZONE })}
+                            {date.dateTime && (
+                                <div className="text-black flex">
+                                    {formatTz(date.dateTime, "HH:mm", { timeZone: TIME_ZONE })} - {formatTz(add(date.dateTime, { minutes: parseInt(formData.walkDuration) }), "HH:mm", { timeZone: TIME_ZONE })}
+                                </div>
+                            )}
+                        </div>
+                        <form className="h-full w-full overflow-y-auto bg-white" onSubmit={submitForm}>
+                            {currentStep === 0 && (
+                                <div className="flex flex-col justify-between h-full p-5 w-full">
+                                    <div className="flex flex-col gap-4">
+                                        <div className="flex flex-col gap-2">
+                                            <div className="text-left">Раса на куче</div>
+                                            <input
+                                                id="dogBreed"
+                                                name="dogBreed"
+                                                value={formData.dogBreed}
                                                 onChange={handleInputChange}
-                                                className="p-2 border-solid border-darkGray rounded-3xl border-[1px] w-full"
+                                                type="text"
+                                                placeholder="Доберман"
+                                                className="p-2 border-solid border-darkGray rounded-3xl border-[1px]"
                                                 required
-                                            >
-                                                <option value="socialization">Социјализација</option>
-                                                <option value="sport">Спорт</option>
-                                                <option value="relax">Релакс</option>
-                                            </select>
+                                            />
+                                        </div>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="text-left">Тип на прошетка</div>
+                                            <div className="custom-select">
+                                                <select
+                                                    id="walkType"
+                                                    name="walkType"
+                                                    value={formData.walkType}
+                                                    onChange={handleInputChange}
+                                                    className="p-2 border-solid border-darkGray rounded-3xl border-[1px] w-full"
+                                                    required
+                                                >
+                                                    <option value="socialization">Социјализација</option>
+                                                    <option value="sport">Спорт</option>
+                                                    <option value="relax">Релакс</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="text-left">Времетраење на прошетка</div>
+                                            <div className="custom-select">
+                                                <select
+                                                    id="walkDuration"
+                                                    name="walkDuration"
+                                                    value={formData.walkDuration}
+                                                    onChange={handleInputChange}
+                                                    className="p-2 border-solid border-darkGray rounded-3xl border-[1px] w-full"
+                                                    required
+                                                >
+                                                    <option value="90">90 Минути</option>
+                                                    <option value="60">60 Минути</option>
+                                                    <option value="30">30 Минути</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="text-left">Времетраење на прошетка</div>
-                                        <div className="custom-select">
-                                            <select
-                                                id="walkDuration"
-                                                name="walkDuration"
-                                                value={formData.walkDuration}
-                                                onChange={handleInputChange}
-                                                className="p-2 border-solid border-darkGray rounded-3xl border-[1px] w-full"
-                                                required
-                                            >
-                                                <option value="90">90 Минути</option>
-                                                <option value="60">60 Минути</option>
-                                                <option value="30">30 Минути</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={() => setCurrentStep(1)}
-                                    className={`w-full bg-orange h-10 rounded-lg ${!formData.dogBreed ? "opacity-50 cursor-not-allowed" : ""}`}
-                                    disabled={!formData.dogBreed}
-                                >
-                                    Следен чекор
-                                </button>
-                            </div>
-                        )}
-
-                        {currentStep === 1 && (
-                            <div className="flex flex-col justify-start h-full px-5 pb-5 pt-2 w-full gap-2 overflow-y-auto">
-                                <div className="flex flex-col gap-2">
-                                    <a
-                                        onClick={() => setCurrentStep(0)}
-                                        className="flex items-center cursor-pointer"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-                                            <path fillRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
-                                        </svg>
-                                        Назад кон информации
-                                    </a>
-                                </div>
-                                {renderFirstHalfSlots()}
-                                <div className="flex items-center px-4">
-                                    <div className="flex-grow h-px bg-black" />
-                                    <span className="px-2">Пауза од 11 до 16</span>
-                                    <div className="flex-grow h-px bg-black" />
-                                </div>
-                                {renderSecondHalfSlots()}
-                            </div>
-                        )}
-
-                        {currentStep === 2 && (
-                            <div className="flex flex-col justify-between h-full px-5 pb-5 pt-2 w-full">
-                                <div className="flex flex-col gap-2">
-                                    <a
+                                    <button
                                         onClick={() => setCurrentStep(1)}
-                                        className="flex items-center cursor-pointer"
+                                        className={`w-full bg-orange h-10 rounded-lg ${!formData.dogBreed ? "opacity-50 cursor-not-allowed" : ""}`}
+                                        disabled={!formData.dogBreed}
                                     >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-                                            <path fillRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
-                                        </svg>
-                                        Назад кон термин
-                                    </a>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="text-left">Град</div>
-                                        <div className="custom-select">
-                                            <select
-                                                id="city"
-                                                name="city"
-                                                value={formData.city}
-                                                onChange={handleInputChange}
-                                                className="p-2 border-solid border-darkGray rounded-3xl border-[1px] w-full"
-                                                required
-                                            >
-                                                <option value="skopje">Скопје</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="text-left">Општина</div>
-                                        <div className="custom-select">
-                                            <select
-                                                id="municipality"
-                                                name="municipality"
-                                                value={formData.municipality}
-                                                onChange={handleInputChange}
-                                                className="p-2 border-solid border-darkGray rounded-3xl border-[1px] w-full"
-                                                required
-                                            >
-                                                <option value="">Општина</option>
-                                                <option value="aerodrom">Аеродром</option>
-                                                <option value="butel">Бутел</option>
-                                                <option value="gazi_baba">Гази Баба</option>
-                                                <option value="gjorce_petrov">Ѓорче Петров</option>
-                                                <option value="karposh">Карпош</option>
-                                                <option value="kisela_voda">Кисела Вода</option>
-                                                <option value="centar">Центар</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="text-left">Адреса</div>
-                                        <input
-                                            id="address"
-                                            name="address"
-                                            value={formData.address}
-                                            onChange={handleInputChange}
-                                            type="text"
-                                            placeholder="Партизански Одреди бр. 18/2"
-                                            className="p-2 border-solid border-darkGray rounded-3xl border-[1px]"
-                                            required
-                                        />
-                                    </div>
+                                        Следен чекор
+                                    </button>
                                 </div>
-                                <button
-                                    onClick={() => setCurrentStep(3)}
-                                    className={`w-full bg-orange h-10 rounded-lg ${(!formData.city || !formData.municipality || !formData.address) ? "opacity-50 cursor-not-allowed" : ""}`}
-                                    disabled={!formData.city || !formData.municipality || !formData.address}
-                                >
-                                    Следен чекор
-                                </button>
-                            </div>
-                        )}
+                            )}
 
-                        {currentStep === 3 && (
-                            <div className="flex flex-col justify-between h-full px-5 pb-5 pt-2 w-full">
-                                <div className="flex flex-col gap-2">
-                                    <a
-                                        onClick={() => setCurrentStep(2)}
-                                        className="flex items-center cursor-pointer"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-                                            <path fillRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
-                                        </svg>
-                                        Назад кон локација
-                                    </a>
+                            {currentStep === 1 && (
+                                <div className="flex flex-col justify-start h-full px-5 pb-5 pt-2 w-full gap-2 overflow-y-auto">
                                     <div className="flex flex-col gap-2">
-                                        <div className="text-left">Име и презиме</div>
-                                        <input
-                                            id="name"
-                                            name="name"
-                                            value={formData.name}
-                                            onChange={handleInputChange}
-                                            type="text"
-                                            placeholder="Иван Ивановски"
-                                            className="p-2 border-solid border-darkGray rounded-3xl border-[1px]"
-                                            required
-                                        />
+                                        <a
+                                            onClick={() => setCurrentStep(0)}
+                                            className="flex items-center cursor-pointer"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
+                                                <path fillRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
+                                            </svg>
+                                            Назад кон информации
+                                        </a>
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex items-center gap-2">
-                                            <div className="text-left">Email</div>
-                                            <div className={`text-red-500 text-sm ${(!validateEmail(formData.email) && formData.email !== "") ? "block" : "hidden"}`}>Невалиден Email</div>
-                                        </div>
-                                        <input
-                                            id="email"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleInputChange}
-                                            type="email"
-                                            placeholder="ime.prezime@mail.com"
-                                            className="p-2 border-solid border-darkGray rounded-3xl border-[1px]"
-                                            required
-                                        />
+                                    {renderFirstHalfSlots()}
+                                    <div className="flex items-center px-4">
+                                        <div className="flex-grow h-px bg-black" />
+                                        <span className="px-2">Пауза од 11 до 16</span>
+                                        <div className="flex-grow h-px bg-black" />
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex items-center gap-2">
-                                            <div className="text-left">Телефон</div>
-                                            <div className={`text-red-500 text-sm ${(!validatePhoneNumber(formData.phoneNumber) && formData.phoneNumber !== "") ? "block" : "hidden"}`}>Невалиден Телефон</div>
-                                        </div>
-                                        <input
-                                            id="phoneNumber"
-                                            name="phoneNumber"
-                                            value={formData.phoneNumber}
-                                            onChange={handleInputChange}
-                                            type="tel"
-                                            placeholder="070 123 456"
-                                            className="p-2 border-solid border-darkGray rounded-3xl border-[1px]"
-                                            required
-                                        />
-                                    </div>
+                                    {renderSecondHalfSlots()}
                                 </div>
-                                <button
-                                    type="submit"
-                                    className={`w-full bg-orange h-10 rounded-lg ${(!formData.name || !validateEmail(formData.email) || !validatePhoneNumber(formData.phoneNumber)) ? "opacity-50 cursor-not-allowed" : ""}`}
-                                    disabled={!formData.name || !validateEmail(formData.email) || !validatePhoneNumber(formData.phoneNumber)}
-                                >
-                                    Закажи термин
-                                </button>
-                            </div>
-                        )}
-                    </form>
+                            )}
+
+                            {currentStep === 2 && (
+                                <div className="flex flex-col justify-between h-full px-5 pb-5 pt-2 w-full">
+                                    <div className="flex flex-col gap-2">
+                                        <a
+                                            onClick={() => setCurrentStep(1)}
+                                            className="flex items-center cursor-pointer"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
+                                                <path fillRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
+                                            </svg>
+                                            Назад кон термин
+                                        </a>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="text-left">Град</div>
+                                            <div className="custom-select">
+                                                <select
+                                                    id="city"
+                                                    name="city"
+                                                    value={formData.city}
+                                                    onChange={handleInputChange}
+                                                    className="p-2 border-solid border-darkGray rounded-3xl border-[1px] w-full"
+                                                    required
+                                                >
+                                                    <option value="skopje">Скопје</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="text-left">Општина</div>
+                                            <div className="custom-select">
+                                                <select
+                                                    id="municipality"
+                                                    name="municipality"
+                                                    value={formData.municipality}
+                                                    onChange={handleInputChange}
+                                                    className="p-2 border-solid border-darkGray rounded-3xl border-[1px] w-full"
+                                                    required
+                                                >
+                                                    <option value="">Општина</option>
+                                                    <option value="aerodrom">Аеродром</option>
+                                                    <option value="butel">Бутел</option>
+                                                    <option value="gazi_baba">Гази Баба</option>
+                                                    <option value="gjorce_petrov">Ѓорче Петров</option>
+                                                    <option value="karposh">Карпош</option>
+                                                    <option value="kisela_voda">Кисела Вода</option>
+                                                    <option value="centar">Центар</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="text-left">Адреса</div>
+                                            <input
+                                                id="address"
+                                                name="address"
+                                                value={formData.address}
+                                                onChange={handleInputChange}
+                                                type="text"
+                                                placeholder="Партизански Одреди бр. 18/2"
+                                                className="p-2 border-solid border-darkGray rounded-3xl border-[1px]"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => setCurrentStep(3)}
+                                        className={`w-full bg-orange h-10 rounded-lg ${(!formData.city || !formData.municipality || !formData.address) ? "opacity-50 cursor-not-allowed" : ""}`}
+                                        disabled={!formData.city || !formData.municipality || !formData.address}
+                                    >
+                                        Следен чекор
+                                    </button>
+                                </div>
+                            )}
+
+                            {currentStep === 3 && (
+                                <div className="flex flex-col justify-between h-full px-5 pb-5 pt-2 w-full">
+                                    <div className="flex flex-col gap-2">
+                                        <a
+                                            onClick={() => setCurrentStep(2)}
+                                            className="flex items-center cursor-pointer"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
+                                                <path fillRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
+                                            </svg>
+                                            Назад кон локација
+                                        </a>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="text-left">Име и презиме</div>
+                                            <input
+                                                id="name"
+                                                name="name"
+                                                value={formData.name}
+                                                onChange={handleInputChange}
+                                                type="text"
+                                                placeholder="Иван Ивановски"
+                                                className="p-2 border-solid border-darkGray rounded-3xl border-[1px]"
+                                                required
+                                            />
+                                        </div>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex items-center gap-2">
+                                                <div className="text-left">Email</div>
+                                                <div className={`text-red-500 text-sm ${(!validateEmail(formData.email) && formData.email !== "") ? "block" : "hidden"}`}>Невалиден Email</div>
+                                            </div>
+                                            <input
+                                                id="email"
+                                                name="email"
+                                                value={formData.email}
+                                                onChange={handleInputChange}
+                                                type="email"
+                                                placeholder="ime.prezime@mail.com"
+                                                className="p-2 border-solid border-darkGray rounded-3xl border-[1px]"
+                                                required
+                                            />
+                                        </div>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex items-center gap-2">
+                                                <div className="text-left">Телефон</div>
+                                                <div className={`text-red-500 text-sm ${(!validatePhoneNumber(formData.phoneNumber) && formData.phoneNumber !== "") ? "block" : "hidden"}`}>Невалиден Телефон</div>
+                                            </div>
+                                            <input
+                                                id="phoneNumber"
+                                                name="phoneNumber"
+                                                value={formData.phoneNumber}
+                                                onChange={handleInputChange}
+                                                type="tel"
+                                                placeholder="070 123 456"
+                                                className="p-2 border-solid border-darkGray rounded-3xl border-[1px]"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className={`w-full bg-orange h-10 rounded-lg ${(!formData.name || !validateEmail(formData.email) || !validatePhoneNumber(formData.phoneNumber)) ? "opacity-50 cursor-not-allowed" : ""}`}
+                                        disabled={!formData.name || !validateEmail(formData.email) || !validatePhoneNumber(formData.phoneNumber)}
+                                    >
+                                        Закажи термин
+                                    </button>
+                                </div>
+                            )}
+                        </form>
+                    </div>
                 </div>
+                <Image src={Paw} alt="Paws Footprint Right" className="hidden xl:block w-64 h-64 2xl:w-128 2xl:h-128 opacity-15 rotate-90" />
             </div>
         </div>
     );
