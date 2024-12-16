@@ -1,17 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { retrieveReservations, getReservationsFromYesterday } from "../../actions/reservationActions";
-import ReservationModal from "@/Reservations/ReservationModal";
-import ReservationsTable from "@/Reservations/ReservationsTable";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
+import EmployeeTable from "@/Employees/EmployeeTable"
 
-export default function Dashboard() {
+
+export default function EmployeesDashboard() {
+    // return <div>debug div</div>;
     const [isLoading, setIsLoading] = useState(true);
-    const [activeReservations, setActiveReservations] = useState([]);
-    const [allReservations, setAllReservations] = useState([]);
     const router = useRouter();
-    const [showReservationModal, setShowReservationModal] = useState(false);
+    const [showEmployeeModal, setShowEmployeeModal] = useState(false);
 
     //todo: migrate out to sub-header for dashboard navigation
     const logout = async () => {
@@ -45,33 +43,24 @@ export default function Dashboard() {
             });
     }, [router]);
 
-    const fetchReservations = async () => {
-        const { reservations: activeReservations, error: activeReservationsError } = await getReservationsFromYesterday();
-        const { reservations: allReservations, error: allReservationsError } = await retrieveReservations();
-
-        if (activeReservationsError || allReservationsError) {
-            throw new Error(activeReservationsError || allReservationsError);
-        }
-
-        setActiveReservations(activeReservations);
-        setAllReservations(allReservations);
-    };
 
     if (isLoading) return <div className="py-12 text-center text-charcoal">Loading...</div>;
 
     return (
         <div className="flex flex-col w-screen justify-center items-center py-12 px-4 lg:px-12 gap-4 text-charcoal">
             <div className="flex flex-col-reverse sm:flex-row w-full justify-between gap-2">
-                <button onClick={() => setShowReservationModal(true)} className="text-xl px-3 py-1 border-2 border-black rounded-lg">
-                    + Додади термин
+                <button onClick={() => setShowEmployeeModal(true)}
+                        className="text-xl px-3 py-1 border-2 border-black rounded-lg">
+                    + Додади вработен
                 </button>
                 <button onClick={logout} className="text-xl px-3 py-1 bg-red-500 text-white rounded-lg">
                     Log Out
                 </button>
             </div>
-            {showReservationModal && <ReservationModal fetchReservations={fetchReservations} setShowReservationModal={setShowReservationModal} />}
+            {/*{showEmployeeModal &&*/}
+            {/*    <EmployeeModal fetchReservations={fetchEmployees} setShowReservationModal={setShowEmployeeModal}/>}*/}
 
-            <ReservationsTable fetchReservations={fetchReservations} activeReservations={activeReservations} allReservations={allReservations} />
+            <EmployeeTable/>
         </div>
     );
 }

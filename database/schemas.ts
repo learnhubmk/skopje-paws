@@ -33,3 +33,17 @@ export const reservations = pgTable("reservations", {
   walkType: varchar("walkType", { length: 64 }).notNull(),
   reservedAt: timestamp("reservedAt").defaultNow().notNull(),
 });
+
+export const employees = pgTable("employees", {
+  id: serial("id").primaryKey(),
+  created_at: date("created_at").notNull(),
+  name: varchar("name", { length: 64 }).notNull(),
+  username: varchar("username", { length: 64 }).notNull(),
+  password: varchar("password", { length: 64 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  phoneNumber: varchar("phoneNumber", { length: 32 }).notNull(),
+  city: varchar("city", { length: 128 }).notNull(),
+  municipality: varchar("municipality", { length: 128 }).notNull(),
+  address: varchar("address", { length: 255 }).notNull(),
+  //todo roles new table and then join
+});

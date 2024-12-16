@@ -6,7 +6,7 @@ import { add, startOfTomorrow, startOfDay, isAfter, isBefore, isEqual, setHours,
 import { toZonedTime, format as formatTz } from "date-fns-tz";
 import { BREAK_TIME, CLOSING_TIME, OPENING_TIME, PAUSE_TIME, CONTINUE_TIME } from "./config";
 import { Montserrat } from "next/font/google";
-import { retrieveReservations, addReservation } from "../../actions/calendarActions";
+import { retrieveReservations, addReservation } from "../../actions/reservationActions";
 import Image from "next/image";
 import Paw from "/public/paw.svg";
 import PawTwo from "/public/paw2.svg";
