@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "db:yarn": "yarn db:generate && yarn db:migrate",
+    "db:npm": "npm run db:generate && npm run db:migrate",
+    "docker:up": "docker compose up -d"
   },
   "dependencies": {
     "@tanstack/match-sorter-utils": "^8.19.4",
