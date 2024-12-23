@@ -5,44 +5,28 @@ import { useRouter } from "next/navigation";
 import { retrieveReservations, getReservationsFromYesterday } from "../../actions/reservationActions";
 import ReservationModal from "@/Reservations/ReservationModal";
 import ReservationsTable from "@/Reservations/ReservationsTable";
+import DashboardHeader from "@/DashboardHeader";
 
 export default function Dashboard() {
     const [isLoading, setIsLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [activeReservations, setActiveReservations] = useState([]);
     const [allReservations, setAllReservations] = useState([]);
     const router = useRouter();
     const [showReservationModal, setShowReservationModal] = useState(false);
 
-    //todo: migrate out to sub-header for dashboard navigation
-    const logout = async () => {
-        fetch("/api/auth/logout", {
-            method: "POST",
-        })
-            .then((response) => {
-                if (response.ok) {
-                    router.push("/");
-                } else {
-                    console.error("Failed to log out");
-                }
-            })
-            .catch(() => {
-                console.error("Something went wrong during logout");
-            });
-    };
-
     useEffect(() => {
         fetch("/api/auth/check")
-            .then(async response => {
-                if (!response.ok) {
-                    router.push("/login");
+            .then((response) => {
+                if (response.ok) {
+                    setIsAuthenticated(true);
+                    fetchReservations();
                 } else {
-                    // await fetchReservations();
-                    setIsLoading(false);
+                    router.push("/login");
                 }
             })
-            .catch(() => {
-                // router.push("/login");
-            });
+            .catch(() => router.push("/login"))
+            .finally(() => setIsLoading(false));
     }, [router]);
 
     const fetchReservations = async () => {
@@ -61,17 +45,15 @@ export default function Dashboard() {
 
     return (
         <div className="flex flex-col w-screen justify-center items-center py-12 px-4 lg:px-12 gap-4 text-charcoal">
+            <DashboardHeader />
             <div className="flex flex-col-reverse sm:flex-row w-full justify-between gap-2">
                 <button onClick={() => setShowReservationModal(true)} className="text-xl px-3 py-1 border-2 border-black rounded-lg">
                     + Додади термин
                 </button>
-                <button onClick={logout} className="text-xl px-3 py-1 bg-red-500 text-white rounded-lg">
-                    Log Out
-                </button>
             </div>
             {showReservationModal && <ReservationModal fetchReservations={fetchReservations} setShowReservationModal={setShowReservationModal} />}
 
-            <ReservationsTable fetchReservations={fetchReservations} activeReservations={activeReservations} allReservations={allReservations} />
+            {isAuthenticated && <ReservationsTable fetchReservations={fetchReservations} activeReservations={activeReservations} allReservations={allReservations} />}
         </div>
     );
 }
