@@ -134,9 +134,6 @@ export default function ReservationsTable({ fetchReservations, activeReservation
         getFilteredRowModel: getFilteredRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        debugTable: true,
-        debugHeaders: true,
-        debugColumns: false,
     });
 
     return (
