@@ -177,7 +177,7 @@ export default function Table({ callback, columns, labels }) {
                     >
                         {[10, 20, 30, 40, 50].map(pageSize => (
                             <option key={pageSize} value={pageSize}>
-                                Покажи {pageSize}
+                                Покажи {pageSize} {labels.pagination}
                             </option>
                         ))}
                     </select>

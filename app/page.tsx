@@ -4,7 +4,7 @@ import Services from "@/Services";
 import FAQ from "@/FAQ/FAQ";
 import Form from "@/Form";
 import Blogs from "./blogs/page";
-import ReservationComponent from "@/Calendar/ReservationComponent";
+import ReservationComponent from "@/Reservations/ReservationComponent";
 
 export default function Home() {
 

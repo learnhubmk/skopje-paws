@@ -53,7 +53,7 @@ export default function Header() {
                                 <Link href={"/#contact"} onClick={() => setShowMenu(false)}>Контакт</Link>
                             </li>
                             <li className="py-6 lg:py-0 px-6 lg:px-0 text-center">
-                                <Link href={"/#reservation"} className="bg-orange px-4 py-1 rounded" onClick={() => setShowMenu(false)}>Закажи термин</Link>
+                                <Link href={"/#reservation"} className="bg-orange text-white px-4 py-1 rounded" onClick={() => setShowMenu(false)}>Закажи термин</Link>
                             </li>
                         </ul>
                     </div>

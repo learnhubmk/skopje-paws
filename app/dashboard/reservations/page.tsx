@@ -2,13 +2,14 @@
 
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
-import EmployeeTable from "@/Employees/EmployeeTable";
+import ReservationModal from "@/Reservations/ReservationModal";
+import ReservationsTable from "@/Reservations/ReservationsTable";
 
-export default function EmployeesDashboard() {
+export default function Dashboard() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [showEmployeesModal, setShowEmployeesModal] = useState(false);
+    const [showReservationModal, setShowReservationModal] = useState(false);
 
     useEffect(() => {
         fetch("/api/auth/check")
@@ -23,18 +24,19 @@ export default function EmployeesDashboard() {
             .finally(() => setIsLoading(false));
     }, [router]);
 
+
     if (isLoading) return <div className="py-12 text-center text-charcoal">Loading...</div>;
 
     return (
         <>
             <div className="flex flex-col-reverse sm:flex-row w-full justify-between gap-2">
-                <button onClick={() => setShowEmployeesModal(true)}
+                <button onClick={() => setShowReservationModal(true)}
                         className="text-xl px-3 py-1 border-2 border-black rounded-lg">
-                    + Додади вработен
+                    + Додади термин
                 </button>
             </div>
-            {/*<EmployeeModal/>*/}
-            <EmployeeTable/>
+            {showReservationModal && <ReservationModal setShowReservationModal={setShowReservationModal}/>}
+            {isAuthenticated && <ReservationsTable/>}
         </>
     );
 }

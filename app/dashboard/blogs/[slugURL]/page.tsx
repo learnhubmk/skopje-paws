@@ -1,6 +1,6 @@
 import React from "react";
 import BlogWriter from "@/BlogCreator/BlogWriter";
-import { selectBlog } from "../../../actions/blogActions";
+import { selectBlog } from "../../../../actions/blogActions";
 
 export default async function BlogWriterPage({ params }: { params: { slugURL: string } }) {
     const { slugURL } = params;

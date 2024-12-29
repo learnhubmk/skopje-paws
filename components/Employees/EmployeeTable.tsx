@@ -1,16 +1,26 @@
 import {retrieveEmployees} from "../../actions/employeeActions";
 import Table from "@/reusable/table";
+import {deleteReservation} from "../../actions/reservationActions";
 
 export default function EmployeeTable() {
 
     const fetchEmployees = async () => {
         try {
-            const {employees} = await retrieveEmployees();
-            console.log("employees", employees);
+            await retrieveEmployees();
         } catch (error) {
             console.error("error fetching employees", error)
         }
     }
+
+    const handleDeleteEmployee = async (id: number) => {
+        const isConfirmed = window.confirm("Дали сигурно сакате да го избришете вработениот?");
+
+        if (isConfirmed) {
+            await deleteReservation(id)
+                .then(fetchEmployees);
+        }
+    };
+
 
     const columns = [
         {
@@ -22,11 +32,6 @@ export default function EmployeeTable() {
             accessorKey: "name",
             header: "Име и презиме",
             cell: (props) => <p>{props.getValue()}</p>
-        },
-        {
-            accessorKey: "password",
-            header: "Password",
-            cell: () => <p>Reset Password</p>
         },
         {
             accessorKey: "username",
@@ -59,20 +64,27 @@ export default function EmployeeTable() {
             cell: (props) => <p>{props.getValue()}</p>
         },
         {
+            accessorKey: "password",
+            header: "Password",
+            cell: () => <p>Reset Password</p>
+        },
+        {
             accessorKey: "id",
             header: "Избриши",
             enableSorting: false,
             cell: (props) => (
-                <div>permission based checking</div>
-                // <button
-                //     onClick={() => handleDeleteReservation(props.getValue())}
-                //     className="font-semibold text-red-500"
-                // >
-                //     X
-                // </button>
+                // <div>permission based checking</div>
+                <button
+                    onClick={() => handleDeleteEmployee(props.getValue())}
+                    className="font-semibold text-red-500"
+                >
+                    X
+                </button>
             )
         }
     ];
 
-    return <Table columns={columns} callback={fetchEmployees} labels={{"pagination": "вработени"}}></Table>
+    const labels = {"pagination": "вработени", "add": "вработен"};
+
+    return <Table columns={columns} callback={fetchEmployees} labels={labels}/>
 }

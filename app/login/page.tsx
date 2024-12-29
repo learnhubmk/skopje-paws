@@ -1,28 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        const response = await fetch("/api/auth/login", {
+        await fetch("/api/auth/login", {
             method: "POST",
-            body: JSON.stringify({ username, password }),
-        })
-
-        if (response.ok) {
-            router.push("/dashboard");
-        } else {
-            const errorData = await response.json();
-            setError(errorData.error || "Something went wrong");
-        }
+            body: JSON.stringify({username, password}),
+        }).then(async (response) => {
+            if (response.ok) {
+                router.push("/dashboard");
+            }
+        }).catch(error => window.alert(error))
     };
 
     useEffect(() => {
@@ -39,7 +34,8 @@ export default function LoginPage() {
 
     return (
         <div className="pt-12 w-screen flex flex-col justify-center items-center">
-            <div className="flex flex-col p-4 gap-4 w-5/6 max-w-screen-sm border-2 border-black rounded-xl text-charcoal">
+            <div
+                className="flex flex-col p-4 gap-4 w-5/6 max-w-screen-sm border-2 border-black rounded-xl text-charcoal">
                 <h1 className="font-bold text-4xl text-center p-2">Login</h1>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-1">
@@ -61,7 +57,6 @@ export default function LoginPage() {
                             onChange={(e) => setPassword(e.target.value)}
                             className="font-extrabold h-8 px-1 border-[1px] border-black rounded"
                         />
-                        {error && <p className="text-red-500">{error}</p>}
                     </div>
                     <button
                         type="submit"
