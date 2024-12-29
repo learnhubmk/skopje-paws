@@ -2,7 +2,7 @@ import Steps from "@/Steps/Steps";
 import Carousel from "@/Carousel/Carousel";
 import Services from "@/Services";
 import FAQ from "@/FAQ/FAQ";
-import Form from "@/Form";
+import ContactForm from "@/ContactForm";
 import Blogs from "./blogs/page";
 import ReservationComponent from "@/Reservations/ReservationComponent";
 
@@ -15,7 +15,7 @@ export default function Home() {
             <Carousel />
             <Services />
             <FAQ />
-            <Form />
+            <ContactForm />
             <Blogs limit={3} />
         </div>
     )
