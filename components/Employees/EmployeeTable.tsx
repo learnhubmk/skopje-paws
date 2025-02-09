@@ -49,11 +49,6 @@ export default function EmployeeTable() {
             cell: (props) => <p>{props.getValue()}</p>
         },
         {
-            accessorKey: "city",
-            header: "Град",
-            cell: (props) => <p>{props.getValue()}</p>
-        },
-        {
             accessorKey: "municipality",
             header: "Општина",
             cell: (props) => <p>{props.getValue()}</p>

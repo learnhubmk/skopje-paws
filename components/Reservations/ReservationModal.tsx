@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { addReservation } from "../../actions/reservationActions";
+import {useState} from "react";
+import {addReservation, getReservations} from "../../actions/reservationActions";
 
-export default function ReservationModal({ fetchReservations, setShowReservationModal }) {
+export default function ReservationModal({setShowReservationModal}) {
     const [formData, setFormData] = useState({
         reservationTime: "",
         reservationDate: "",
@@ -17,7 +17,7 @@ export default function ReservationModal({ fetchReservations, setShowReservation
     });
 
     async function handleInputChange(e) {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -36,7 +36,6 @@ export default function ReservationModal({ fetchReservations, setShowReservation
                 formData.name,
                 formData.email,
                 formData.phoneNumber,
-                formData.city,
                 formData.municipality,
                 formData.address,
                 formData.dogBreed,
@@ -45,7 +44,7 @@ export default function ReservationModal({ fetchReservations, setShowReservation
 
             if (result.status === 200) {
                 setShowReservationModal(false);
-                fetchReservations();
+                await getReservations();
             } else {
                 alert(result.message);
             }
@@ -55,7 +54,8 @@ export default function ReservationModal({ fetchReservations, setShowReservation
     }
 
     return (
-        <div className="fixed inset-0 z-50 bg-gray-600 bg-opacity-50 overflow-y-auto h-screen w-full flex items-center justify-center">
+        <div
+            className="fixed inset-0 z-50 bg-gray-600 bg-opacity-50 overflow-y-auto h-screen w-full flex items-center justify-center">
             <div className="p-4 h-2/3 border w-96 shadow-lg rounded-md bg-white text-charcoal flex flex-col gap-4">
                 <div className="flex justify-end">
                     <button
@@ -185,23 +185,6 @@ export default function ReservationModal({ fetchReservations, setShowReservation
                                 required
                             />
                         </div>
-
-                        <div className="flex flex-col gap-2">
-                            <label htmlFor="city" className="text-left">Град</label>
-                            <div className="custom-select">
-                                <select
-                                    id="city"
-                                    name="city"
-                                    value={formData.city}
-                                    onChange={handleInputChange}
-                                    className="p-2 border-solid border-darkGray rounded-3xl border-[1px] w-full"
-                                    required
-                                >
-                                    <option value="skopje">Скопје</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <div className="flex flex-col gap-2">
                             <label htmlFor="municipality" className="text-left">Општина</label>
                             <div className="custom-select">
@@ -213,7 +196,6 @@ export default function ReservationModal({ fetchReservations, setShowReservation
                                     className="p-2 border-solid border-darkGray rounded-3xl border-[1px] w-full"
                                     required
                                 >
-                                    <option value="">Општина</option>
                                     <option value="aerodrom">Аеродром</option>
                                     <option value="butel">Бутел</option>
                                     <option value="gazi_baba">Гази Баба</option>
@@ -241,7 +223,7 @@ export default function ReservationModal({ fetchReservations, setShowReservation
                         <button
                             type="submit"
                             className="w-full bg-orange h-10 rounded-lg disabled:bg-gray-200 disabled:cursor-not-allowed"
-                            disabled={!Object.values(formData).every((field) => field)}
+                            // disabled={!Object.values(formData).every((field) => field)}
                         >
                             Креирај резервација
                         </button>

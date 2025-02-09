@@ -1,31 +1,17 @@
-import {deleteReservation, getReservationsFromYesterday} from "../../actions/reservationActions";
+import {deleteReservation, getReservations} from "../../actions/reservationActions";
 import Table from "@/reusable/table";
 import {useState} from "react";
 
 
 export default function ReservationsTable() {
-    const [activeReservations, setActiveReservations] = useState([])
-    const [allReservations, setAllReservations] = useState([])
-
-    const fetchReservations = async () => {
-        const {reservations: activeReservations, error: activeReservationsError} = await getReservationsFromYesterday();
-        // const {reservations: allReservations, error: allReservationsError} = await retrieveReservations();
-
-        // if (activeReservationsError || allReservationsError) {
-        //     throw new Error(activeReservationsError || allReservationsError);
-        // }
-
-        setActiveReservations(activeReservations);
-        // setAllReservations(allReservations);
-    };
-
-
+    const [rerender, setRerender] = useState(false);
     const handleDeleteReservation = async (id: number) => {
         const isConfirmed = window.confirm("Дали сигурно сакате да ја избришете резервацијата?");
-
         if (isConfirmed) {
             await deleteReservation(id)
-                .then(fetchReservations);
+                .then(getReservations);
+
+            setRerender(true);
         }
     };
 
@@ -43,27 +29,22 @@ export default function ReservationsTable() {
         },
         {
             accessorKey: "walkDuration",
-            header: "Времетраење на прошетка",
+            header: "Траење",
             cell: (props) => <p>{props.getValue()}</p>
         },
         {
             accessorKey: "name",
-            header: "Име и презиме",
+            header: "Име/Презиме",
             cell: (props) => <p>{props.getValue()}</p>
         },
         {
             accessorKey: "email",
-            header: "Е-пошта",
+            header: "Емаил",
             cell: (props) => <p>{props.getValue()}</p>
         },
         {
             accessorKey: "phoneNumber",
-            header: "Телефонски број",
-            cell: (props) => <p>{props.getValue()}</p>
-        },
-        {
-            accessorKey: "city",
-            header: "Град",
+            header: "Број",
             cell: (props) => <p>{props.getValue()}</p>
         },
         {
@@ -78,15 +59,21 @@ export default function ReservationsTable() {
         },
         {
             accessorKey: "dogBreed",
-            header: "Раса на куче",
+            header: "Раса",
             cell: (props) => <p>{props.getValue()}</p>
         },
         {
             accessorKey: "walkType",
-            header: "Тип на прошетка",
+            header: "Тип",
             cell: (props) => <p>{props.getValue()}</p>
         },
         {
+            accessorKey: "walker",
+            header: "Шетач",
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            // todo permission based
             accessorKey: "id",
             header: "Избриши",
             enableSorting: false,
@@ -102,6 +89,5 @@ export default function ReservationsTable() {
     ];
 
     const labels = {"pagination": "резервации"}
-
-    return <Table columns={columns} callback={fetchReservations} labels={labels}/>
+    return  <Table columns={columns} callback={getReservations} labels={labels}/>
 }

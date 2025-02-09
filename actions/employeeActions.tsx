@@ -17,3 +17,12 @@ export const retrieveEmployees = async (): Promise<{ employees: any | null, erro
         return {employees: null, error: "Failed to fetch employees!"};
     }
 }
+
+export const addEmployee = async () => {
+//     TODO finish implementing
+}
+
+// generates username from name: john doe => jdoe
+export const employeeUsernameGenerator = (name, lastname) => {
+    return name.substring(0, 1) + lastname;
+}

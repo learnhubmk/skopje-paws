@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useEffect, useState } from "react";
+import {InputHTMLAttributes, useEffect, useState} from "react";
 import {
     ColumnFiltersState,
     FilterFn,
@@ -10,36 +10,31 @@ import {
     SortingState,
     useReactTable,
 } from "@tanstack/react-table";
-import { rankItem } from "@tanstack/match-sorter-utils";
+import {rankItem} from "@tanstack/match-sorter-utils";
 
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value);
-    addMeta({ itemRank });
+    addMeta({itemRank});
     return itemRank.passed;
 };
 
-export default function Table({ callback, columns, labels }) {
+export default function Table({callback, columns, labels}) {
     const [data, setData] = useState([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [globalFilter, setGlobalFilter] = useState("");
 
-    // const handleDeleteReservation = async (id: number) => {
-    //     const isConfirmed = window.confirm("Дали сигурно сакате да ја избришете резервацијата?");
-    //
-    //     if (isConfirmed) {
-    //         // await deleteReservation(id);
-    //         callback();
-    //     }
-    // };
+    useEffect(() => {
+        callback().then(setData);
+    }, [callback]);
 
     const [sorting, setSorting] = useState<SortingState>([])
 
     const table = useReactTable({
         data,
         columns,
-        filterFns: { fuzzy: fuzzyFilter },
-        state: { columnFilters, globalFilter, sorting },
+        filterFns: {fuzzy: fuzzyFilter},
+        state: {columnFilters, globalFilter, sorting},
         onColumnFiltersChange: setColumnFilters,
         onGlobalFilterChange: setGlobalFilter,
         onSortingChange: setSorting,
@@ -64,23 +59,23 @@ export default function Table({ callback, columns, labels }) {
                 </div>
                 <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg text-center">
                     <thead>
-                        {table.getHeaderGroups().map(headerGroup => (
-                            <tr key={headerGroup.id} className="text-black">
-                                {headerGroup.headers.map((header, index) => {
-                                    const deleteHeader = index === headerGroup.headers.length - 1;
-                                    return (
-                                        <th
-                                            key={header.id}
-                                            className={`p-2 border-2 border-black ${header.column.getCanSort() && !deleteHeader
-                                                ? 'cursor-pointer select-none hover:bg-gray-100'
-                                                : ''}`}
-                                            onClick={header.column.getToggleSortingHandler()}
-                                        >
-                                            {header.isPlaceholder ? null : (
-                                                <div className="flex items-center justify-center gap-1 w-full">
-                                                    <span>{flexRender(header.column.columnDef.header, header.getContext())}</span>
-                                                    {!deleteHeader && (
-                                                        <div className="flex flex-col items-center">
+                    {table.getHeaderGroups().map(headerGroup => (
+                        <tr key={headerGroup.id} className="text-black">
+                            {headerGroup.headers.map((header, index) => {
+                                const deleteHeader = index === headerGroup.headers.length - 1;
+                                return (
+                                    <th
+                                        key={header.id}
+                                        className={`p-2 border-2 border-black ${header.column.getCanSort() && !deleteHeader
+                                            ? 'cursor-pointer select-none hover:bg-gray-100'
+                                            : ''}`}
+                                        onClick={header.column.getToggleSortingHandler()}
+                                    >
+                                        {header.isPlaceholder ? null : (
+                                            <div className="flex items-center justify-center gap-1 w-full">
+                                                <span>{flexRender(header.column.columnDef.header, header.getContext())}</span>
+                                                {!deleteHeader && (
+                                                    <div className="flex flex-col items-center">
                                                             <span
                                                                 className={`${header.column.getIsSorted() === 'asc'
                                                                     ? 'text-black opacity-100'
@@ -88,35 +83,35 @@ export default function Table({ callback, columns, labels }) {
                                                             >
                                                                 ▲
                                                             </span>
-                                                            <span
-                                                                className={`${header.column.getIsSorted() === 'desc'
-                                                                    ? 'text-black opacity-100'
-                                                                    : 'text-gray-500 opacity-20'}`}
-                                                            >
+                                                        <span
+                                                            className={`${header.column.getIsSorted() === 'desc'
+                                                                ? 'text-black opacity-100'
+                                                                : 'text-gray-500 opacity-20'}`}
+                                                        >
                                                                 ▼
                                                             </span>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </th>
-                                    );
-                                })}
-                            </tr>
-                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </th>
+                                );
+                            })}
+                        </tr>
+                    ))}
                     </thead>
                     <tbody>
-                        {(
-                            table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className="border-b hover:bg-gray-200">
-                                    {row.getVisibleCells().map(cell => (
-                                        <td key={cell.id} className="px-2 py-1 border border-black">
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))
-                        )}
+                    {(
+                        table.getRowModel().rows.map(row => (
+                            <tr key={row.id} className="border-b hover:bg-gray-200">
+                                {row.getVisibleCells().map(cell => (
+                                    <td key={cell.id} className="px-2 py-1 border border-black">
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))
+                    )}
                     </tbody>
                 </table>
                 <div className="flex items-center gap-2">
@@ -192,11 +187,11 @@ export default function Table({ callback, columns, labels }) {
 }
 
 function DebouncedInput({
-    value: initialValue,
-    onChange,
-    debounce = 500,
-    ...props
-}: {
+                            value: initialValue,
+                            onChange,
+                            debounce = 500,
+                            ...props
+                        }: {
     value: string | number;
     onChange: (value: string | number) => void;
     debounce?: number;
@@ -212,5 +207,5 @@ function DebouncedInput({
         return () => clearTimeout(timeout);
     }, [value, debounce, onChange]);
 
-    return <input {...props} value={value} onChange={(e) => setValue(e.target.value)} />;
+    return <input {...props} value={value} onChange={(e) => setValue(e.target.value)}/>;
 }

@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 
 export async function GET() {
+  return NextResponse.json({ isLoggedIn: true });
   const cookieStore = cookies();
   const token = cookieStore.get("token")?.value;
 

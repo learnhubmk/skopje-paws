@@ -1,29 +1,12 @@
 "use client";
 
-import {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
+import {useState} from "react";
 import EmployeeTable from "@/Employees/EmployeeTable";
+import EmployeeModal from "@/Employees/EmployeeModal";
 
 export default function EmployeesDashboard() {
-    const router = useRouter();
-    const [isLoading, setIsLoading] = useState(true);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [showEmployeesModal, setShowEmployeesModal] = useState(false);
 
-    useEffect(() => {
-        fetch("/api/auth/check")
-            .then((response) => {
-                if (response.ok) {
-                    setIsAuthenticated(true);
-                } else {
-                    router.push("/login");
-                }
-            })
-            .catch(() => router.push("/login"))
-            .finally(() => setIsLoading(false));
-    }, [router]);
-
-    if (isLoading) return <div className="py-12 text-center text-charcoal">Loading...</div>;
 
     return (
         <>
@@ -33,7 +16,7 @@ export default function EmployeesDashboard() {
                     + Додади вработен
                 </button>
             </div>
-            {/*<EmployeeModal/>*/}
+            {showEmployeesModal && <EmployeeModal/>}
             <EmployeeTable/>
         </>
     );
